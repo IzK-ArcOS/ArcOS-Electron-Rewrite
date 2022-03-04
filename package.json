@@ -1,0 +1,52 @@
+{
+  "name": "vite-electron-svelte",
+  "private": true,
+  "engines": {
+    "node": ">=v14.16"
+  },
+  "main": "packages/main/dist/index.cjs",
+  "scripts": {
+    "buildEnvTypes": "node scripts/buildEnvTypes.js",
+    "build": "node scripts/build.js",
+    "precompile": "cross-env MODE=production yarn build",
+    "compile": "electron-builder build --config electron-builder.config.js --dir --config.asar=false",
+    "dev": "node scripts/watch.js",
+    "lint": "eslint . --ext js,ts,svelte",
+    "pretypecheck": "yarn buildEnvTypes",
+    "typecheck": "yarn typecheck-main && yarn typecheck-preload && yarn typecheck-renderer",
+    "typecheck-main": "tsc --noEmit -p packages/main/tsconfig.json",
+    "typecheck-preload": "tsc --noEmit -p packages/preload/tsconfig.json",
+    "typecheck-renderer": "tsc --noEmit -p packages/renderer/tsconfig.json"
+  },
+  "browserslist": [
+    "Chrome 91"
+  ],
+  "lint-staged": {
+    "*.{js,ts,svelte}": "eslint --cache --fix"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.14",
+    "@tsconfig/svelte": "^2.0.1",
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "autoprefixer": "^10.3.1",
+    "cross-env": "^7.0.3",
+    "electron": "^13.1.7",
+    "electron-builder": "^22.11.7",
+    "electron-devtools-installer": "^3.2.0",
+    "eslint": "^7.31.0",
+    "lint-staged": "^11.1.0",
+    "postcss": "^8.3.6",
+    "svelte": "^3.40.2",
+    "svelte-preprocess": "^4.7.4",
+    "tailwindcss": "^2.2.7",
+    "typescript": "^4.3.5",
+    "vite": "^2.4.3"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.6",
+    "electron-updater": "^4.4.1",
+    "node-sass": "^7.0.1",
+    "sass": "^1.49.9"
+  }
+}
