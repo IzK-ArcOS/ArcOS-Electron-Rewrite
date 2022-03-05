@@ -20,14 +20,28 @@ const createWindow = async () => {
       contextIsolation: true,
       enableRemoteModule: false,
     },
+    fullscreen: true,
   });
 
   // Disable menu bar
   mainWindow.setMenu(null);
 
   mainWindow.on("ready-to-show", () => {
-    globalShortcut.register("CmdOrCtrl+Shift+I", () => {
+    globalShortcut.register("Alt+Enter", () => {
+      //if (mainWindow!.isFocused()) {
+      mainWindow!.fullScreen = !mainWindow?.fullScreen;
+      //}
+    });
+
+    globalShortcut.register("CmdOrCtrl+Alt+Shift+I", () => {
       mainWindow?.webContents.toggleDevTools();
+    });
+
+    mainWindow!.on("maximize", () => {
+      mainWindow!.unmaximize();
+      setTimeout(() => {
+        mainWindow!.fullScreen = true;
+      }, 50);
     });
 
     mainWindow?.show();

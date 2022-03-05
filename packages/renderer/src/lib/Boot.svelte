@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Login from "./Login.svelte"
+  import Login from "./Login.svelte";
   import logo from "../img/systemIcon.svg";
 
   import "../css/progressbar.scss";
@@ -15,25 +15,25 @@
 </script>
 
 {#if visible}
-<div class="boot">
-  <div class="centered center" class:hidden={!visible}>
-    <img class="bootlogo" src={logo} height="150px" alt="bootlogo" />
+  <div class="boot">
+    <div class="centered center" class:hidden={!visible}>
+      <img class="bootlogo" src={logo} height="150px" alt="bootlogo" />
 
-    <div class="slider userdefined">
-      <div class="line dark" />
-      <div class="subline dark inc" />
-      <div class="subline dark dec" />
+      <div class="slider userdefined">
+        <div class="line dark" />
+        <div class="subline dark inc" />
+        <div class="subline dark dec" />
+      </div>
     </div>
-  </div>
 
-  <div class="centered" class:hidden={!visible}>
-    <h4 class="status">{status}</h4>
-  </div>
+    <div class="centered" class:hidden={!visible}>
+      <h4 class="status">{status}</h4>
+    </div>
 
-  <div class="status"  class:hidden={!visible}/>
-</div>
+    <div class="status" class:hidden={!visible} />
+  </div>
 {:else}
-  <Login/>
+  <Login />
 {/if}
 
 <style lang="css">
@@ -113,7 +113,7 @@
     border-radius: 3.5px;
     background-color: #333;
     height: 7px;
-    transition:opacity 1.5s;
+    transition: opacity 1.5s;
   }
 
   div.line.dark {

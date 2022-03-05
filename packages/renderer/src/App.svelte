@@ -2,4 +2,4 @@
   import Boot from "./lib/boot.svelte";
 </script>
 
-<Boot status="hello, world!" duration=5000/>
+<Boot status="hello, world!" duration={5000} />

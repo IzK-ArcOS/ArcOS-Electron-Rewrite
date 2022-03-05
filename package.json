@@ -44,6 +44,7 @@
     "vite": "^2.4.3"
   },
   "dependencies": {
+    "buffer": "^6.0.3",
     "dayjs": "^1.10.6",
     "electron-updater": "^4.4.1",
     "node-sass": "^7.0.1",
