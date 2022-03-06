@@ -58,16 +58,46 @@ export enum Theme {
   lightsharp,
 }
 
+export enum TaskbarPosition {
+  top,
+  bottom,
+}
+
 const defaultUserData: UserTemplate = {
-  name: "",
-  admin: false,
-  pswd: "",
+  enabled: true,
+  dispWelcome: true,
+  enableAnimations: true,
+  globalVolume: 1,
+  muted: false,
+  noTaskbarButtonLabels: true,
+  showDesktopIcons: true,
+  taskbarPos: TaskbarPosition.bottom,
   theme: Theme.darkround,
+  titlebarButtonsLeft: false,
+  profilePicture: null,
+  isAdmin: false,
+  smallStart: false,
+  centeredTaskbarButtons: false,
+  wallpaper: "theme",
+  name: "",
 };
 
 export type UserTemplate = {
-  name: string;
-  admin: boolean;
-  pswd: string;
+  enabled: boolean;
+  dispWelcome: boolean;
+  enableAnimations: boolean;
+  globalVolume: number;
+  muted: boolean;
+  noTaskbarButtonLabels: boolean;
+  showDesktopIcons: boolean;
+  taskbarPos: TaskbarPosition;
   theme: Theme;
+  titlebarButtonsLeft: boolean;
+  profilePicture: null | number;
+  isAdmin: boolean;
+  smallStart: boolean;
+  centeredTaskbarButtons: boolean;
+  wallpaper: string;
+  name: string;
+  pswd?: string;
 };

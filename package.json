@@ -47,6 +47,7 @@
     "buffer": "^6.0.3",
     "dayjs": "^1.10.6",
     "electron-updater": "^4.4.1",
+    "node-loader": "^2.0.0",
     "node-sass": "^7.0.1",
     "sass": "^1.49.9"
   }

@@ -1,13 +1,12 @@
 <script lang="ts">
   import buf from "buffer/";
+  import pfp from "../../img/profilePictures/undefined.png";
+
+  export let user: string;
 
   const Buffer = buf.Buffer;
 
-  import pfp from "../../../img/profilePictures/undefined.png";
-
   let ProfilePicture = pfp;
-
-  export let user: string;
 
   user = Buffer.from(user, "base64").toString();
 
@@ -35,7 +34,7 @@
     font-size: unset;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    color:white;
+    color: white;
   }
 
   button.user:hover,
@@ -59,9 +58,8 @@
     max-width: 160px;
     overflow-x: hidden;
     margin: 0px;
-  } 
+  }
 
-  
   * {
     outline: none !important;
     /*transition: all 0.25s;*/

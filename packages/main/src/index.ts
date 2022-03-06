@@ -20,17 +20,20 @@ const createWindow = async () => {
       contextIsolation: true,
       enableRemoteModule: false,
     },
+    width: 800,
+    height: 600,
+    frame: true,
+    minWidth: 1000,
+    minHeight: 700,
     fullscreen: true,
+    backgroundColor: "#000",
   });
 
-  // Disable menu bar
   mainWindow.setMenu(null);
 
   mainWindow.on("ready-to-show", () => {
     globalShortcut.register("Alt+Enter", () => {
-      //if (mainWindow!.isFocused()) {
       mainWindow!.fullScreen = !mainWindow?.fullScreen;
-      //}
     });
 
     globalShortcut.register("CmdOrCtrl+Alt+Shift+I", () => {

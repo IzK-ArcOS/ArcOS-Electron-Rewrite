@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Login from "./Login.svelte";
+  import LoginScreen from "./LoginScreen.svelte";
   import logo from "../img/systemIcon.svg";
 
   import "../css/progressbar.scss";
@@ -33,7 +33,7 @@
     <div class="status" class:hidden={!visible} />
   </div>
 {:else}
-  <Login />
+  <LoginScreen />
 {/if}
 
 <style lang="css">

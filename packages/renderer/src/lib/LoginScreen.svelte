@@ -1,25 +1,52 @@
 <script lang="ts">
-  import User from "./login/selector/User.svelte";
+  import QuickActions from "./login/QuickActions.svelte";
+  import ToDesktop from "./login/ToDesktop.svelte";
+  import User from "./login/UserSelector.svelte";
   import { createUser, isUser } from "./ts/userLogic";
+  import buf from "buffer/";
+
+  const Buffer = buf.Buffer;
 
   createUser("TechWorldInc");
 
   let users: string[] = [];
 
+  let hidden: boolean = true;
+  let goDesk: boolean = false;
+  let lognNm: string = "";
+
   for (let i = 0; i < localStorage.length; i++)
     if (isUser(localStorage.key(i))) users.push(localStorage.key(i)!);
 
   console.log(users);
+
+  setTimeout(() => {
+    hidden = !hidden;
+  }, 2000);
+
+  function loginAs(user: string) {
+    lognNm = Buffer.from(user,"base64").toString();
+    goDesk = true;
+  }
 </script>
 
-<div class="login">
-  <div class="content">
-    <div class="userSelector">
-      {#each users as user}
-        <User {user} />
-      {/each}
+<div class="login" class:hidden>
+  {#if !goDesk}<div class="content">
+      <div class="userSelector">
+        {#each users as user}
+          <span
+            on:click={() => {
+              loginAs(user);
+            }}
+          >
+            <User {user} />
+          </span>
+        {/each}
+      </div>
     </div>
-  </div>
+    <QuickActions />{:else}
+    <ToDesktop username={lognNm} />
+  {/if}
 </div>
 
 <style>
@@ -41,6 +68,10 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+  
+  div.login.hidden {
+    opacity: 0;
   }
 
   div.content {
