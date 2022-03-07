@@ -3,9 +3,12 @@
   import logo from "../img/systemIcon.svg";
 
   import "../css/progressbar.scss";
+  import { notifyStartService } from "./ts/logLogic";
 
   export let status: string;
   export let duration: number;
+
+  notifyStartService("Boot");
 
   let visible: boolean = true;
 

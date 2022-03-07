@@ -2,8 +2,11 @@
   import QuickActions from "./login/QuickActions.svelte";
   import ToDesktop from "./login/ToDesktop.svelte";
   import User from "./login/UserSelector.svelte";
-  import { createUser, isUser } from "./ts/userLogic";
+  import { createUser, isUser, setUserPreference, TaskbarPosition } from "./ts/userLogic";
   import buf from "buffer/";
+  import { notifyStartService } from "./ts/logLogic";
+
+  notifyStartService("LoginScreen");
 
   const Buffer = buf.Buffer;
 
@@ -18,14 +21,14 @@
   for (let i = 0; i < localStorage.length; i++)
     if (isUser(localStorage.key(i))) users.push(localStorage.key(i)!);
 
-  console.log(users);
-
   setTimeout(() => {
     hidden = !hidden;
   }, 2000);
 
   function loginAs(user: string) {
-    lognNm = Buffer.from(user,"base64").toString();
+    notifyStartService("loginAs: logging in as " + user);
+
+    lognNm = Buffer.from(user, "base64").toString();
     goDesk = true;
   }
 </script>
@@ -69,7 +72,7 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
-  
+
   div.login.hidden {
     opacity: 0;
   }
