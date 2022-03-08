@@ -1,8 +1,11 @@
 <script lang="ts">
   import dfltpfp from "../../img/profilePictures/undefined.png";
   import spinner from "../../img/spinner.svg";
-  import Desktop from "../desktop/Desktop.svelte"
-import { notifyStartService } from "../ts/logLogic";
+  import Desktop from "../desktop/Desktop.svelte";
+  import { notifyStartService } from "../ts/logLogic";
+  import { userDataStore } from "../ts/stores";
+  import { getUserData } from "../ts/userLogic";
+  import type { UserTemplate } from "../ts/userLogic";
 
   export let username: string;
 
@@ -19,7 +22,9 @@ import { notifyStartService } from "../ts/logLogic";
     desk = true;
   }, 5000);
 
-  notifyStartService("ToDesktop: Redirecting to Desktop...")
+  notifyStartService("ToDesktop: Redirecting to Desktop...");
+
+  userDataStore.set(getUserData(username) as UserTemplate);
 </script>
 
 {#if !desk}

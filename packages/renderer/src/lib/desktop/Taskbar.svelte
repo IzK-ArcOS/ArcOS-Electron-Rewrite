@@ -1,11 +1,11 @@
 <script lang="ts">
   import { getUserData, isUser, TaskbarPosition, Theme } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
-
   import ActionCenter from "./ActionCenter.svelte";
   import Startmenu from "./Startmenu.svelte";
   import buf from "buffer/";
   import { Themes } from "../ts/themeLogic";
+  import { userDataStore } from "../ts/stores";
 
   export let username: string;
 
@@ -17,16 +17,18 @@
   let backg: string;
   let border: string;
 
-  if (userExists) {
-    setInterval(() => {
-      const userData: UserTemplate = getUserData(username) as UserTemplate;
+  function update(input: UserTemplate | undefined) {
+    const userData: UserTemplate = input as UserTemplate;
 
-      theme = userData.theme;
-      tbtop = userData.taskbarPos == TaskbarPosition.top;
-      backg = Themes.get(theme)!.variables.taskbarBackground;
-      border = Themes.get(theme)!.variables.windowBorder;
-    }, 50);
+    theme = userData.theme;
+    tbtop = userData.taskbarPos == TaskbarPosition.top;
+    backg = Themes.get(theme)!.variables.taskbarBackground;
+    border = Themes.get(theme)!.variables.windowBorder;
   }
+
+  userDataStore.subscribe(update);
+
+  update(getUserData(username) as UserTemplate);
 
   console.log(theme, getUserData(username));
 

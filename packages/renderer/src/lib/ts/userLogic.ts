@@ -1,5 +1,6 @@
 import buf from "buffer/";
 import { notifyStartService } from "./logLogic";
+import { userDataStore } from "./stores";
 const Buffer = buf.Buffer;
 
 export function isUser(username: string | null): boolean {
@@ -64,6 +65,8 @@ export function setUserPreference(
       userData[key] = value;
 
       localStorage.setItem(Buffer.from(username).toString("base64"),Buffer.from(JSON.stringify(userData)).toString("base64"));
+
+      userDataStore.set(userData);
 
       return true;
     }

@@ -9,12 +9,6 @@
   const Buffer = buf.Buffer;
 
   username = username || "User";
-
-  setTimeout(() => {
-    console.warn(
-      setUserPreference("TechWorldInc", "taskbarPos", TaskbarPosition.bottom)
-    );
-  }, 2000);
 </script>
 
 <div class="desktop">
