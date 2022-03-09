@@ -1,5 +1,8 @@
 <script lang="ts">
+  import "../../css/general.scss";
   import buf from "buffer/";
+  import BlankOut from "../BlankOut.svelte";
+  import { startMenuOpened } from "../ts/stores";
   import { setUserPreference, TaskbarPosition } from "../ts/userLogic";
   import Taskbar from "./Taskbar.svelte";
   import Wallpaper from "./Wallpaper.svelte";
@@ -14,6 +17,7 @@
 <div class="desktop">
   <Wallpaper {username} />
   <Taskbar {username} />
+  <BlankOut delay={3000} />
 </div>
 
 <style scoped>

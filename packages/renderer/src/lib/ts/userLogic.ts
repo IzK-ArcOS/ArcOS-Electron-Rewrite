@@ -64,7 +64,10 @@ export function setUserPreference(
     if (typeof value == typeof userData[key]) {
       userData[key] = value;
 
-      localStorage.setItem(Buffer.from(username).toString("base64"),Buffer.from(JSON.stringify(userData)).toString("base64"));
+      localStorage.setItem(
+        Buffer.from(username).toString("base64"),
+        Buffer.from(JSON.stringify(userData)).toString("base64")
+      );
 
       userDataStore.set(userData);
 
@@ -88,6 +91,39 @@ export enum TaskbarPosition {
 }
 
 export interface UserTemplate {
+  theme: Theme;
+  wallpaper: string;
+  fullname: string;
+  admin: boolean;
+  taskbar: TaskbarData;
+  startmenu: StartMenuData;
+  [string: string]: any;
+}
+
+export interface TaskbarData {
+  position: TaskbarPosition;
+  docked?: boolean;
+}
+
+export interface StartMenuData {
+  small: boolean;
+}
+
+const defaultUserData: UserTemplate = {
+  theme: Theme.darkround,
+  wallpaper: "default_darkmode",
+  fullname: "",
+  admin: false,
+  taskbar: {
+    position: TaskbarPosition.bottom,
+    docked: false,
+  },
+  startmenu: {
+    small: false,
+  },
+};
+
+/* export interface UserTemplate {
   enabled: boolean;
   dispWelcome: boolean;
   enableAnimations: boolean;
@@ -126,3 +162,4 @@ const defaultUserData: UserTemplate = {
   wallpaper: "default_darkmode",
   name: "",
 };
+ */

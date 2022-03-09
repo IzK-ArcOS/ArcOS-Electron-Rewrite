@@ -13,34 +13,6 @@ console.warn = (e, c) => {
   }
 };
 
-window.onerror = function (e, c) {
-  let today = new Date();
-  let hour = today.getHours().toString().padStart(2, "0");
-  let minute = today.getMinutes().toString().padStart(2, "0");
-  let second = today.getSeconds().toString().padStart(2, "0");
-  let milisecond = today.getMilliseconds().toString().padStart(3, "0");
-  console.info(
-    `%c${hour}:${minute}:${second}.${milisecond}%cERR%c${e}`,
-    "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#666;margin-right:10px",
-    "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#800;margin-right:10px",
-    "color:#fb4934;"
-  );
-};
-
-console.error = (e, c) => {
-  let today = new Date();
-  let hour = today.getHours().toString().padStart(2, "0");
-  let minute = today.getMinutes().toString().padStart(2, "0");
-  let second = today.getSeconds().toString().padStart(2, "0");
-  let milisecond = today.getMilliseconds().toString().padStart(3, "0");
-  console.info(
-    `%c${hour}:${minute}:${second}.${milisecond}%cERR%c${e}`,
-    "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#666;margin-right:10px",
-    "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#800;margin-right:10px",
-    "color:#fb4934;"
-  );
-};
-
 let loadedModules = [];
 
 export function notifyStartService(name: string, forControl = "") {

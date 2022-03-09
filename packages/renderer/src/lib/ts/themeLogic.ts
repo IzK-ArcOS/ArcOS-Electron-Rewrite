@@ -11,6 +11,23 @@ export const Themes = new Map<Theme, ThemeData>([
         windowBorder: "#fff3 1px solid",
         taskbarBackground: "#00091dd2",
         fontColor: "#fff",
+        startMenuBottomPane: "#00000025",
+        startMenuRightPane: "#00000025",
+      },
+    },
+  ],
+  [
+    Theme.lightsharp,
+    {
+      name: "Light Sharp",
+      builtin: true,
+      variables: {
+        windowBackground: "#ffffff9a",
+        windowBorder: "rgb(160, 160, 160) 1px solid",
+        taskbarBackground: "#ffffff9a",
+        fontColor: "#000",
+        startMenuBottomPane: "#ffffff13",
+        startMenuRightPane: "#ffffff13",
       },
     },
   ],
@@ -27,4 +44,6 @@ export interface ThemeVariables {
   windowBorder: string;
   taskbarBackground: string;
   fontColor: string;
+  startMenuRightPane: string;
+  startMenuBottomPane: string;
 }

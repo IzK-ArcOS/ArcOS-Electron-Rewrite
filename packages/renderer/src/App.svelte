@@ -7,7 +7,7 @@
 </script>
 
 <div>
-  <Boot status="hello, world!" duration={5000} />
+  <Boot status="" duration={5000} />
 </div>
 
 <style scoped>
