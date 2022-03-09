@@ -1,12 +1,11 @@
+import { shutdown } from "./powerLogic";
 import { startMenuOpened } from "./stores";
 
 export const startMenuActions: StartMenuAction[] = [
   {
     name: "Power Options",
     icon: "power_settings_new",
-    action: () => {
-      alert("Power settings? Yes.");
-    },
+    action: shutdown,
   },
 ];
 

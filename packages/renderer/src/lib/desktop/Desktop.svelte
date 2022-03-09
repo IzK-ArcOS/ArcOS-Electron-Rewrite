@@ -1,17 +1,18 @@
 <script lang="ts">
   import "../../css/general.scss";
-  import buf from "buffer/";
   import BlankOut from "../BlankOut.svelte";
-  import { startMenuOpened } from "../ts/stores";
-  import { setUserPreference, TaskbarPosition } from "../ts/userLogic";
+import { PowerState } from "../ts/powerLogic";
+import { powerState } from "../ts/stores";
   import Taskbar from "./Taskbar.svelte";
   import Wallpaper from "./Wallpaper.svelte";
 
   export let username: string;
 
-  const Buffer = buf.Buffer;
-
   username = username || "User";
+
+  setTimeout(() => {
+    powerState.set(PowerState.on);
+  }, 3000);
 </script>
 
 <div class="desktop">

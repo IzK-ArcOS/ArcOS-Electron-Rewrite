@@ -11,6 +11,8 @@
   let bgcolor: string;
   let bottomPane: string;
   let rightPane: string;
+  let taskbarDocked: boolean;
+  let border:string;
 
   function update(data: any) {
     const userData = data as UserTemplate;
@@ -19,6 +21,8 @@
     bgcolor = themeVariables.taskbarBackground;
     rightPane = themeVariables.startMenuRightPane;
     bottomPane = themeVariables.startMenuBottomPane;
+    taskbarDocked = userData.taskbar.docked as boolean;
+    border = themeVariables.windowBorder
   }
 
   update(getUserData(username));
@@ -29,10 +33,11 @@
 <div
   class="startmenu small"
   class:visible
-  style="background-color: {bgcolor};"
+  class:docked={taskbarDocked}
+  style="background-color: {bgcolor}; border: {border}"
   tabindex="-1"
 >
-  <div class="bottomPane" style="background-color: {bottomPane}">
+  <div class="bottomPane" style="background-color: {bottomPane};">
     <h3 class="username">{username}</h3>
     <div class="actions">
       {#each startMenuActions as action}
@@ -65,6 +70,10 @@
     opacity: 0;
     z-index: 1000000003;
     transition: opacity 0.3s, visibility 0.3s;
+  }
+
+  .startmenu.docked {
+    bottom:50px;
   }
 
   * {

@@ -3,24 +3,34 @@
   import spinner from "../../img/spinner.svg";
   import Desktop from "../desktop/Desktop.svelte";
   import { notifyStartService } from "../ts/logLogic";
-  import { userDataStore } from "../ts/stores";
+  import { powerState, userDataStore } from "../ts/stores";
   import { getUserData } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
+  import { PowerState } from "../ts/powerLogic";
 
   export let username: string;
 
   let blur: boolean = false;
   let desk: boolean = false;
+  let pwrState: PowerState;
 
   if (!username) username = "User";
 
   setTimeout(() => {
     blur = true;
+    powerState.set(PowerState.logging_in)
   }, 50);
 
   setTimeout(() => {
     desk = true;
+    powerState.set(PowerState.on)
   }, 5000);
+
+  function updatePowerState(value: PowerState) {
+    pwrState = value;
+  }
+
+  powerState.subscribe(updatePowerState);
 
   notifyStartService("ToDesktop: Redirecting to Desktop...");
 
@@ -38,7 +48,16 @@
     </div>
   </div>
 {:else}
-  <Desktop {username} />
+  <div>
+    {#if pwrState == 0}
+      <Desktop {username} />
+    {:else if pwrState == 1}
+      <h1>Powered off!!!</h1>
+      <button on:click={() => {
+        powerState.set(PowerState.on)
+      }}>Power ON!!!</button>
+    {/if}
+  </div>
 {/if}
 
 <style scoped>

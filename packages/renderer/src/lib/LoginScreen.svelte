@@ -2,9 +2,11 @@
   import QuickActions from "./login/QuickActions.svelte";
   import ToDesktop from "./login/ToDesktop.svelte";
   import User from "./login/UserSelector.svelte";
-  import { createUser, isUser, setUserPreference, TaskbarPosition } from "./ts/userLogic";
+  import { createUser, isUser } from "./ts/userLogic";
   import buf from "buffer/";
   import { notifyStartService } from "./ts/logLogic";
+  import { powerState } from "./ts/stores";
+  import { PowerState } from "./ts/powerLogic";
 
   notifyStartService("LoginScreen");
 
@@ -31,6 +33,12 @@
     lognNm = Buffer.from(user, "base64").toString();
     goDesk = true;
   }
+
+  powerState.subscribe((value) => {
+    console.log(PowerState[value]);
+  });
+
+  powerState.set(PowerState.login);
 </script>
 
 <div class="login" class:hidden>

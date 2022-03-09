@@ -1,22 +1,23 @@
 <script lang="ts">
   import "../../css/general.scss";
   import systemIcon from "../../img/systemIcon.svg";
-  import { getUserData, setUserPreference, TaskbarPosition, Theme } from "../ts/userLogic";
+  import {
+    getUserData,
+    setUserPreference,
+    TaskbarPosition,
+    Theme,
+  } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
   import ActionCenter from "./ActionCenter.svelte";
   import Startmenu from "./Startmenu.svelte";
-  import buf from "buffer/";
   import { Themes } from "../ts/themeLogic";
   import {
     actCenterOpened,
     startMenuOpened,
     userDataStore,
   } from "../ts/stores";
-  import type { Writable } from "svelte/store";
 
   export let username: string;
-
-  const Buffer = buf.Buffer;
 
   let theme: Theme = Theme.darkround;
   let tbbtm: boolean = false;
@@ -42,16 +43,11 @@
   startMenuOpened.subscribe((value) => (startMenuOpen = value));
   actCenterOpened.subscribe((value) => (actCenterOpen = value));
 
-  console.log(startMenuOpened);
   const toggleStart = () => startMenuOpened.set(!startMenuOpen);
+  const toggleActCenter = () => actCenterOpened.set(!actCenterOpen);
 
-  setTimeout(() => {
-    const taskbarData = (getUserData(username) as UserTemplate).taskbar;
-
-    taskbarData.docked = true;
-
-    setUserPreference(username,"taskbar",taskbarData)
-  }, 3000);
+  startMenuOpened.set(false);
+  actCenterOpened.set(false);
 </script>
 
 <div
@@ -87,13 +83,18 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 35px;
+    height: 40px;
+    border-radius: 0;
   }
 
   button.startbutton {
     background-color: transparent;
     border: none;
-    padding: 7px;
+    padding: 8px;
+  }
+
+  button.startbutton:hover {
+    background-color: #0003;
   }
 
   button.startbutton img {
