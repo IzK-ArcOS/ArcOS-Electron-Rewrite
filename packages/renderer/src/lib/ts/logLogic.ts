@@ -1,3 +1,5 @@
+import { PowerState } from "./powerLogic";
+
 console.warn = (e, c) => {
   if (e != "%cElectron Security Warning (Insecure Content-Security-Policy)") {
     let today = new Date();
@@ -63,6 +65,20 @@ export function startModule(mod: string) {
   loadedModules.push(mod);
   console.info(
     `%c${hour}:${minute}:${second}.${milisecond}%cJS%c Module registered: ${mod}`,
+    "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#666;margin-right:10px",
+    "color: #000;padding:2.5px 5px;border-radius:2.5px;background-color:#fabd2f;",
+    "color: #fabd2f"
+  );
+}
+
+export function changePwrState(powerState: PowerState) {
+  let today = new Date();
+  let hour = today.getHours().toString().padStart(2, "0");
+  let minute = today.getMinutes().toString().padStart(2, "0");
+  let second = today.getSeconds().toString().padStart(2, "0");
+  let milisecond = today.getMilliseconds().toString().padStart(3, "0");
+  console.info(
+    `%c${hour}:${minute}:${second}.${milisecond}%cPWR%c PowerState changed: ${PowerState[powerState]}`,
     "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#666;margin-right:10px",
     "color: #000;padding:2.5px 5px;border-radius:2.5px;background-color:#fabd2f;",
     "color: #fabd2f"

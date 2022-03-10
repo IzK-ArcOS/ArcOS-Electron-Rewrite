@@ -1,15 +1,19 @@
-import { PowerState, shutdown } from "./powerLogic";
+import { crash, PowerState, shutdown } from "./powerLogic";
 import { powerState, startMenuOpened } from "./stores";
 
 export const startMenuActions: StartMenuAction[] = [
   {
-    name: "Power Options",
+    name: "Shut Down",
     icon: "power_settings_new",
     action: shutdown,
   },  {
     name: "Log Off",
-    icon: "power_settings_new",
-    action: () =>   powerState.set(PowerState.logging_off),
+    icon: "lock",
+    action: () => powerState.set(PowerState.logging_off),
+  },  {
+    name: "Crash",
+    icon: "cancel",
+    action: () => crash("MANUALLY_INITIATED_CRASH","The system crashed because of a user performed crash."),
   },
 ];
 

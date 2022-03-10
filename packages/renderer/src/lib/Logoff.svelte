@@ -1,13 +1,12 @@
 <script lang="ts">
   import dfltpfp from "../img/profilePictures/undefined.png";
   import spinner from "../img/spinner.svg";
-  import BlankIn from "./BlankIn.svelte";
-  import LoginScreen from "./LoginScreen.svelte";
+  import { PowerState } from "./ts/powerLogic";
+  import { powerState } from "./ts/stores";
   export let username: string;
   export let powerOff: boolean;
 
   let blur: boolean = false;
-  let redirect: boolean = false;
 
   setTimeout(() => {
     blur = true;
@@ -17,33 +16,40 @@
     if (powerOff) {
       close();
     } else {
-      redirect = true;
+      powerState.set(PowerState.login);
     }
   }, 4000);
 </script>
 
-{#if !redirect}
-  <div class="welcome" class:blur>
-    <div class="content">
-      <img src={dfltpfp} height="150px" alt="Profile" class="profile" />
-      <h1 class="passwordHeader">Goodbye, {username}!</h1>
-      <h3 class="passwordSubHeader">
-        {powerOff ? "Shutting down..." : "Logging off..."}
-      </h3>
-      <br />
-      <img src={spinner} height="50px" alt="Loading" />
-    </div>
-    {#if powerOff}
-      <BlankIn delay={3000} />
-    {/if}
+<div class="background"/>
+<div class="welcome" class:blur>
+  <div class="content">
+    <img src={dfltpfp} height="150px" alt="Profile" class="profile" />
+    <h1 class="passwordHeader">Goodbye, {username}!</h1>
+    <h3 class="passwordSubHeader">
+      {powerOff ? "Shutting down..." : "Logging off..."}
+    </h3>
+    <br />
+    <img src={spinner} height="50px" alt="Loading" />
   </div>
-{:else}
-  <LoginScreen />
-{/if}
+</div>
 
 <style scoped>
+  @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Inter&display=swap");
   img.profile {
     border-radius: 50%;
+  }
+
+  div.background {
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    background-image: url("../bg/img16.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   .passwordHeader {
@@ -75,5 +81,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  * {
+    color:white;
   }
 </style>

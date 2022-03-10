@@ -7,6 +7,7 @@
   import { getUserData } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
   import { PowerState } from "../ts/powerLogic";
+  import Logoff from "../Logoff.svelte";
 
   export let username: string;
 
@@ -18,12 +19,12 @@
 
   setTimeout(() => {
     blur = true;
-    powerState.set(PowerState.logging_in)
+    powerState.set(PowerState.logging_in);
   }, 50);
 
   setTimeout(() => {
     desk = true;
-    powerState.set(PowerState.on)
+    powerState.set(PowerState.on);
   }, 5000);
 
   function updatePowerState(value: PowerState) {
@@ -38,6 +39,7 @@
 </script>
 
 {#if !desk}
+  <div class="background" />
   <div class="welcome" class:blur>
     <div class="content">
       <img src={dfltpfp} height="150px" alt="Profile" class="profile" />
@@ -51,18 +53,30 @@
   <div>
     {#if pwrState == PowerState.desktop || pwrState == PowerState.on}
       <Desktop {username} />
-    {:else if pwrState == 1}
-      <h1>Powered off!!!</h1>
-      <button on:click={() => {
-        powerState.set(PowerState.on)
-      }}>Power ON!!!</button>
+    {:else if pwrState == PowerState.logging_off}
+      <Logoff powerOff={false} {username} />
+    {:else if pwrState == PowerState.shutting_down}
+      <Logoff powerOff={true} {username} />
     {/if}
   </div>
 {/if}
 
 <style scoped>
+  @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Inter&display=swap");
   img.profile {
     border-radius: 50%;
+  }
+
+  div.background {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url("../../bg/img16.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   .passwordHeader {
@@ -94,5 +108,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+
+  * {
+    color: white;
   }
 </style>

@@ -4,6 +4,9 @@
 
   import "../css/progressbar.scss";
   import { notifyStartService } from "./ts/logLogic";
+  import { PowerState } from "./ts/powerLogic";
+  import { powerState } from "./ts/stores";
+import Crash from "./Crash.svelte";
 
   export let status: string;
   export let duration: number;
@@ -11,32 +14,41 @@
   notifyStartService("Boot");
 
   let visible: boolean = true;
+  let pwrState: PowerState;
+
+  powerState.subscribe((v) => (pwrState = v));
 
   setTimeout(() => {
     visible = false;
   }, duration);
 </script>
 
-{#if visible}
-  <div class="boot">
-    <div class="centered center" class:hidden={!visible}>
-      <img class="bootlogo" src={logo} height="150px" alt="bootlogo" />
+{#if pwrState != PowerState.crashed}
+  <div>
+    {#if visible}
+      <div class="boot">
+        <div class="centered center" class:hidden={!visible}>
+          <img class="bootlogo" src={logo} height="150px" alt="bootlogo" />
 
-      <div class="slider userdefined">
-        <div class="line dark" />
-        <div class="subline dark inc" />
-        <div class="subline dark dec" />
+          <div class="slider userdefined">
+            <div class="line dark" />
+            <div class="subline dark inc" />
+            <div class="subline dark dec" />
+          </div>
+        </div>
+
+        <div class="centered" class:hidden={!visible}>
+          <h4 class="status">{status}</h4>
+        </div>
+
+        <div class="status" class:hidden={!visible} />
       </div>
-    </div>
-
-    <div class="centered" class:hidden={!visible}>
-      <h4 class="status">{status}</h4>
-    </div>
-
-    <div class="status" class:hidden={!visible} />
+    {:else}
+      <LoginScreen />
+    {/if}
   </div>
 {:else}
-  <LoginScreen />
+  <Crash/>
 {/if}
 
 <style lang="css">
@@ -69,7 +81,7 @@
     opacity: 0;
   }
 
-  * {
+  div.boot * {
     font-weight: var(--global-font-weight);
     cursor: none;
   }

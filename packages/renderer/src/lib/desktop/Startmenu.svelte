@@ -12,9 +12,9 @@
   let bottomPane: string;
   let rightPane: string;
   let taskbarDocked: boolean;
-  let border:string;
+  let border: string;
 
-  function update(data: any) {
+  function update(data: UserTemplate | boolean) {
     const userData = data as UserTemplate;
     const themeVariables = Themes.get(userData.theme)!.variables;
 
@@ -22,7 +22,7 @@
     rightPane = themeVariables.startMenuRightPane;
     bottomPane = themeVariables.startMenuBottomPane;
     taskbarDocked = userData.taskbar.docked as boolean;
-    border = themeVariables.windowBorder
+    border = themeVariables.windowBorder;
   }
 
   update(getUserData(username));
@@ -52,6 +52,7 @@
 </div>
 
 <style scoped>
+  @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Inter&display=swap");
   .startmenu:root {
     --rightPane: #0003;
     --bottmPane: #0005;
@@ -73,11 +74,12 @@
   }
 
   .startmenu.docked {
-    bottom:50px;
+    bottom: 50px;
   }
 
-  * {
+  *:not(.material-icons) {
     box-sizing: border-box;
+    font-family: "IBM Plex Sans", sans-serif;
   }
 
   .startmenu.visible {
@@ -90,6 +92,7 @@
   .bottomPane,
   .startmenu {
     box-sizing: border-box;
+    color: white;
   }
 
   .rightPane {

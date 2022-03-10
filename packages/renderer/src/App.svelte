@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Boot from "./lib/boot.svelte";
+  import Boot from "./lib/Boot.svelte";
   import { notifyStartService } from "./lib/ts/logLogic";
 
   console.clear();

@@ -1,9 +1,19 @@
-import { powerState } from "./stores";
+import { BSODMessg, BSODTitle, powerState } from "./stores";
 
 export function shutdown() {
-  powerState.set(PowerState.logging_off);
+  powerState.set(PowerState.shutting_down);
 }
 
+export function logoff() {
+  powerState.set(PowerState.logging_off)
+}
+
+export function crash(title:string,messg:string) {
+  BSODTitle.set(title);
+  BSODMessg.set(messg);
+
+  powerState.set(PowerState.crashed);
+}
 export enum PowerState {
   on,
   off,

@@ -4,9 +4,10 @@
   import User from "./login/UserSelector.svelte";
   import { createUser, isUser } from "./ts/userLogic";
   import buf from "buffer/";
-  import { notifyStartService } from "./ts/logLogic";
+  import { changePwrState, notifyStartService } from "./ts/logLogic";
   import { powerState } from "./ts/stores";
   import { PowerState } from "./ts/powerLogic";
+import BlankOut from "./BlankOut.svelte";
 
   notifyStartService("LoginScreen");
 
@@ -15,34 +16,30 @@
   createUser("TechWorldInc");
 
   let users: string[] = [];
-
-  let hidden: boolean = true;
-  let goDesk: boolean = false;
   let lognNm: string = "";
+  let pwrState: PowerState;
 
   for (let i = 0; i < localStorage.length; i++)
     if (isUser(localStorage.key(i))) users.push(localStorage.key(i)!);
-
-  setTimeout(() => {
-    hidden = !hidden;
-  }, 2000);
 
   function loginAs(user: string) {
     notifyStartService("loginAs: logging in as " + user);
 
     lognNm = Buffer.from(user, "base64").toString();
-    goDesk = true;
+    powerState.set(PowerState.logging_in);
   }
 
   powerState.subscribe((value) => {
-    console.log(PowerState[value]);
+    pwrState = value;
+    changePwrState(value);
   });
 
   powerState.set(PowerState.login);
 </script>
 
-<div class="login" class:hidden>
-  {#if !goDesk}<div class="content">
+{#if pwrState == PowerState.login}
+  <div class="login">
+    <div class="content">
       <div class="userSelector">
         {#each users as user}
           <span
@@ -55,12 +52,14 @@
         {/each}
       </div>
     </div>
-    <QuickActions />{:else}
-    <ToDesktop username={lognNm} />
-  {/if}
-</div>
+    <QuickActions />
+  </div>
+  <BlankOut delay={2000}/>
+{:else}
+  <ToDesktop username={lognNm} />
+{/if}
 
-<style>
+<style scoped>
   div.login {
     position: fixed;
     top: 0px;
@@ -79,10 +78,6 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-  }
-
-  div.login.hidden {
-    opacity: 0;
   }
 
   div.content {

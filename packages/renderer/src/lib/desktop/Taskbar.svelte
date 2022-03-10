@@ -8,7 +8,6 @@
     Theme,
   } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
-  import ActionCenter from "./ActionCenter.svelte";
   import Startmenu from "./Startmenu.svelte";
   import { Themes } from "../ts/themeLogic";
   import {
@@ -62,7 +61,6 @@
 </div>
 
 <Startmenu visible={startMenuOpen} {username} />
-<ActionCenter />
 
 <style scoped>
   div.taskbar {
@@ -91,6 +89,8 @@
     background-color: transparent;
     border: none;
     padding: 8px;
+    max-height: 40px;
+    border-radius: 5px;
   }
 
   button.startbutton:hover {
