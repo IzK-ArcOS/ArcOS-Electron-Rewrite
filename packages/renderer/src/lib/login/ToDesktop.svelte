@@ -49,7 +49,7 @@
   </div>
 {:else}
   <div>
-    {#if pwrState == 0}
+    {#if pwrState == PowerState.desktop || pwrState == PowerState.on}
       <Desktop {username} />
     {:else if pwrState == 1}
       <h1>Powered off!!!</h1>

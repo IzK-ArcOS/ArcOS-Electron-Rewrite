@@ -26,7 +26,7 @@
   let startMenuOpen: boolean;
   let actCenterOpen: boolean;
 
-  function update(input: UserTemplate | undefined) {
+  function update(input: UserTemplate | boolean) {
     const userData: UserTemplate = input as UserTemplate;
 
     theme = userData.theme;
@@ -37,7 +37,7 @@
     docked = userData.taskbar.docked as boolean;
   }
 
-  update(getUserData(username) as UserTemplate);
+  update(getUserData(username));
 
   userDataStore.subscribe(update);
   startMenuOpened.subscribe((value) => (startMenuOpen = value));

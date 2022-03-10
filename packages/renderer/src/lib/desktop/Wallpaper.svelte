@@ -11,7 +11,7 @@
 
   let wallpaper: string = defwall;
 
-  function update(uData: any) {
+  function update(uData: UserTemplate | boolean) {
     const userData: UserTemplate = uData as UserTemplate;
 
     if (Wallpapers.has(userData.wallpaper))

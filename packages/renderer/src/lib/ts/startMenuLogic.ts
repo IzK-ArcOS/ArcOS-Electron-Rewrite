@@ -1,11 +1,15 @@
-import { shutdown } from "./powerLogic";
-import { startMenuOpened } from "./stores";
+import { PowerState, shutdown } from "./powerLogic";
+import { powerState, startMenuOpened } from "./stores";
 
 export const startMenuActions: StartMenuAction[] = [
   {
     name: "Power Options",
     icon: "power_settings_new",
     action: shutdown,
+  },  {
+    name: "Log Off",
+    icon: "power_settings_new",
+    action: () =>   powerState.set(PowerState.logging_off),
   },
 ];
 

@@ -11,7 +11,7 @@ import { powerState } from "../ts/stores";
   username = username || "User";
 
   setTimeout(() => {
-    powerState.set(PowerState.on);
+    powerState.set(PowerState.desktop);
   }, 3000);
 </script>
 
