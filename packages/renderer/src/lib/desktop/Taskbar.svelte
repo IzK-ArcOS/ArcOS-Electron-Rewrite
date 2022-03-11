@@ -24,6 +24,7 @@
   let docked: boolean = false;
   let startMenuOpen: boolean;
   let actCenterOpen: boolean;
+  let rounded: boolean;
 
   function update(input: UserTemplate | boolean) {
     const userData: UserTemplate = input as UserTemplate;
@@ -34,6 +35,9 @@
       : false;
     backg = Themes.get(theme)!.variables.taskbarBackground;
     docked = userData.taskbar.docked as boolean;
+    rounded = Themes.get(userData.theme)
+      ? Themes.get(userData.theme)?.rounded!
+      : true;
   }
 
   update(getUserData(username));
@@ -52,6 +56,7 @@
 <div
   class="taskbar"
   class:ontop={!tbbtm}
+  class:sharp={!rounded}
   class:docked
   style="background-color: {backg};"
 >

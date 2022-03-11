@@ -1,4 +1,5 @@
 import { app, BrowserWindow, globalShortcut } from "electron";
+import { readdir } from "fs/promises";
 import { join } from "path";
 import { URL } from "url";
 
@@ -19,6 +20,7 @@ const createWindow = async () => {
       preload: join(__dirname, "../../preload/dist/index.cjs"),
       contextIsolation: true,
       enableRemoteModule: false,
+      nodeIntegration: true
     },
     width: 800,
     height: 600,
@@ -48,6 +50,8 @@ const createWindow = async () => {
     });
 
     mainWindow?.show();
+
+    console.log(readdir("\\"))
   });
 
   const pageUrl =

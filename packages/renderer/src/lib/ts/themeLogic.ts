@@ -6,10 +6,11 @@ export const Themes = new Map<Theme, ThemeData>([
     {
       name: "Dark Rounded",
       builtin: true,
+      rounded: true,
       variables: {
-        windowBackground: "#00091dd2",
+        windowBackground: "#222",
         windowBorder: "#fff3 1px solid",
-        taskbarBackground: "#00091dd2",
+        taskbarBackground: "#111",
         fontColor: "#fff",
         startMenuBottomPane: "#00000025",
         startMenuRightPane: "#00000025",
@@ -21,6 +22,7 @@ export const Themes = new Map<Theme, ThemeData>([
     {
       name: "Light Sharp",
       builtin: true,
+      rounded: false,
       variables: {
         windowBackground: "#ffffff9a",
         windowBorder: "rgb(160, 160, 160) 1px solid",
@@ -37,6 +39,7 @@ export interface ThemeData {
   name: string;
   builtin: boolean;
   variables: ThemeVariables;
+  rounded?: boolean;
 }
 
 export interface ThemeVariables {

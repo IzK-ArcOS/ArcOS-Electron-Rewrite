@@ -7,7 +7,7 @@
     BSODTitle.subscribe((v) => title = v);
     BSODMessg.subscribe((v) => messg = v);
 
-    setTimeout(window.location.reload, 3000);
+    setTimeout(() => window.location.reload(), 3000);
 </script>
 
 <div class="body">

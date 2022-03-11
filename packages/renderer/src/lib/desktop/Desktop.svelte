@@ -1,8 +1,9 @@
 <script lang="ts">
   import "../../css/general.scss";
   import BlankOut from "../BlankOut.svelte";
-import { PowerState } from "../ts/powerLogic";
-import { powerState } from "../ts/stores";
+  import { PowerState } from "../ts/powerLogic";
+  import { powerState } from "../ts/stores";
+  import Apps from "./Apps.svelte";
   import Taskbar from "./Taskbar.svelte";
   import Wallpaper from "./Wallpaper.svelte";
 
@@ -17,6 +18,7 @@ import { powerState } from "../ts/stores";
 
 <div class="desktop">
   <Wallpaper {username} />
+  <Apps {username} />
   <Taskbar {username} />
   <BlankOut delay={3000} />
 </div>

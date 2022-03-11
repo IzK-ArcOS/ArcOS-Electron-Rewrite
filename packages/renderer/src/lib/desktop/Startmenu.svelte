@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { getUserData } from "../ts/userLogic";
+  import { getUserData, setUserPreference, Theme } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
   import { Themes } from "../ts/themeLogic";
   import { userDataStore } from "../ts/stores";
   import { startMenuActions } from "../ts/startMenuLogic";
+  import "../../css/general.scss";
 
   export let visible: boolean;
   export let username: string;
@@ -13,6 +14,7 @@
   let rightPane: string;
   let taskbarDocked: boolean;
   let border: string;
+  let rounded: boolean;
 
   function update(data: UserTemplate | boolean) {
     const userData = data as UserTemplate;
@@ -23,9 +25,14 @@
     bottomPane = themeVariables.startMenuBottomPane;
     taskbarDocked = userData.taskbar.docked as boolean;
     border = themeVariables.windowBorder;
+    rounded = Themes.get(userData.theme)
+      ? Themes.get(userData.theme)?.rounded!
+      : true;
   }
 
   update(getUserData(username));
+
+  setUserPreference(username,"theme",Theme.darkround)
 
   userDataStore.subscribe(update);
 </script>
@@ -34,6 +41,7 @@
   class="startmenu small"
   class:visible
   class:docked={taskbarDocked}
+  class:sharp={!rounded}
   style="background-color: {bgcolor}; border: {border}"
   tabindex="-1"
 >
@@ -69,10 +77,10 @@
     width: 500px;
     height: 600px;
     opacity: 0;
+    visibility: hidden;
     z-index: 1000000003;
     transition: opacity 0.3s, visibility 0.3s;
   }
-
   .startmenu.docked {
     bottom: 50px;
   }
