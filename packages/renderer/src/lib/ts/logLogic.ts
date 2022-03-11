@@ -1,20 +1,5 @@
 import { PowerState } from "./powerLogic";
 
-console.warn = (e, c) => {
-  if (e != "%cElectron Security Warning (Insecure Content-Security-Policy)") {
-    let today = new Date();
-    let hour = today.getHours().toString().padStart(2, "0");
-    let minute = today.getMinutes().toString().padStart(2, "0");
-    let second = today.getSeconds().toString().padStart(2, "0");
-    let milisecond = today.getMilliseconds().toString().padStart(3, "0");
-    console.info(
-      `%c${hour}:${minute}:${second}.${milisecond}%c${e}`,
-      "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#666;margin-right:10px",
-      "color:#fe8019;"
-    );
-  }
-};
-
 let loadedModules = [];
 
 export function notifyStartService(name: string, forControl = "") {

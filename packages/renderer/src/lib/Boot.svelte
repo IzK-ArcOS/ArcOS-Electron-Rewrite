@@ -6,7 +6,7 @@
   import { notifyStartService } from "./ts/logLogic";
   import { PowerState } from "./ts/powerLogic";
   import { powerState } from "./ts/stores";
-import Crash from "./Crash.svelte";
+  import Crash from "./Crash.svelte";
 
   export let status: string;
   export let duration: number;
@@ -48,7 +48,7 @@ import Crash from "./Crash.svelte";
     {/if}
   </div>
 {:else}
-  <Crash/>
+  <Crash />
 {/if}
 
 <style lang="css">

@@ -1,31 +1,36 @@
 import type { SvelteComponentDev } from "svelte/internal";
 import testApp from "../apps/testApp.svelte";
 
-export const DefaultAppImports: Window[] = [
+export const DefaultAppImports: WindowData[] = [
   {
     content: testApp,
-    id: "testapp",
+    id: "test1",
     name: "Test Application",
     builtin: true,
     headless: false,
     resizable: true,
-    controls: { min: true, max: false, cls: false },
-    startPos: {x: 810, y: 390},
-    maxSize: {w:100, h: 100}
-  },  {
+    controls: { min: true, max: true, cls: true },
+    pos: { x: 810, y: 390 },
+    maxSize: { w: 100, h: 100 },
+    state: { min: true, max: false, cls: true },
+    register: true,
+  },
+  {
     content: testApp,
-    id: "testapp",
-    name: "Test Application",
+    id: "test2",
+    name: "Test Application (2)",
     builtin: true,
-    headless: false,
-    resizable: true,
-    controls: { min: true, max: false, cls: false },
-    startPos: {x: 510, y: 390},
-    maxSize: {w:100, h: 100}
+    headless: true,
+    resizable: false,
+    controls: { min: true, max: true, cls: true },
+    pos: { x: 510, y: 390 },
+    maxSize: { w: 100, h: 100 },
+    state: { min: false, max: false, cls: true },
+    register: false,
   },
 ];
 
-export interface Window {
+export interface WindowData {
   content: typeof SvelteComponentDev;
   id: string;
   name: string;
@@ -34,7 +39,9 @@ export interface Window {
   resizable: boolean;
   minSize?: { w: number; h: number };
   maxSize?: { w: number; h: number };
-  startSize?: { w: number; h: number };
-  startPos?: { x: number; y: number };
+  size?: { w: number; h: number };
+  pos?: { x: number; y: number };
   controls: { min: boolean; max: boolean; cls: boolean };
+  state: { min: boolean; max: boolean; cls: boolean };
+  register: boolean;
 }

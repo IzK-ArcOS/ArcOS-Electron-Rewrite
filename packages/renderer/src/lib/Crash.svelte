@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { BSODMessg, BSODTitle } from "./ts/stores";
+  import { BSODMessg, BSODTitle } from "./ts/stores";
 
-    let title:string;
-    let messg:string;
+  let title: string;
+  let messg: string;
 
-    BSODTitle.subscribe((v) => title = v);
-    BSODMessg.subscribe((v) => messg = v);
+  BSODTitle.subscribe((v) => (title = v));
+  BSODMessg.subscribe((v) => (messg = v));
 
-    setTimeout(() => window.location.reload(), 3000);
+  setTimeout(() => window.location.reload(), 3000);
 </script>
 
 <div class="body">
@@ -49,11 +49,11 @@
     overflow: hidden;
     word-break: break-all;
     font-family: "Roboto", sans-serif;
-    position:fixed;
-    top:0px;
-    left:0px;
-    width:100%;
-    height:100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
   }
 
   /* * {
@@ -78,7 +78,7 @@
     left: -9vw;
     top: 2vw;
     height: 7vw;
-    font-size:6.7vw
+    font-size: 6.7vw;
   }
 
   p.errorDetails {

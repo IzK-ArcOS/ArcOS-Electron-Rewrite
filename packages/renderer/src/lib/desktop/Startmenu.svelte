@@ -2,9 +2,11 @@
   import { getUserData, setUserPreference, Theme } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
   import { Themes } from "../ts/themeLogic";
-  import { userDataStore } from "../ts/stores";
+  import { userDataStore, Windows } from "../ts/stores";
   import { startMenuActions } from "../ts/startMenuLogic";
   import "../../css/general.scss";
+  import type { WindowData } from "../ts/appLogic";
+  import ShowApp from "./Startmenu/ShowApp.svelte";
 
   export let visible: boolean;
   export let username: string;
@@ -14,10 +16,13 @@
   let rightPane: string;
   let taskbarDocked: boolean;
   let border: string;
+  let color: string;
   let rounded: boolean;
+  let appList: WindowData[];
+  let userData: UserTemplate;
 
   function update(data: UserTemplate | boolean) {
-    const userData = data as UserTemplate;
+    userData = data as UserTemplate;
     const themeVariables = Themes.get(userData.theme)!.variables;
 
     bgcolor = themeVariables.taskbarBackground;
@@ -28,13 +33,17 @@
     rounded = Themes.get(userData.theme)
       ? Themes.get(userData.theme)?.rounded!
       : true;
+
+    color = themeVariables.fontColor;
   }
 
   update(getUserData(username));
 
-  setUserPreference(username,"theme",Theme.darkround)
+  setUserPreference(username, "theme", Theme.darkround);
 
   userDataStore.subscribe(update);
+
+  Windows.subscribe((data) => (appList = data));
 </script>
 
 <div
@@ -42,7 +51,7 @@
   class:visible
   class:docked={taskbarDocked}
   class:sharp={!rounded}
-  style="background-color: {bgcolor}; border: {border}"
+  style="background-color: {bgcolor}; border: {border}; color: {color};"
   tabindex="-1"
 >
   <div class="bottomPane" style="background-color: {bottomPane};">
@@ -55,7 +64,11 @@
       {/each}
     </div>
   </div>
-  <div class="leftPane" />
+  <div class="leftPane">
+    {#each appList as app}
+      <ShowApp {app} {userData} />
+    {/each}
+  </div>
   <div class="rightPane" style="background-color: {rightPane}" />
 </div>
 
@@ -80,6 +93,11 @@
     visibility: hidden;
     z-index: 1000000003;
     transition: opacity 0.3s, visibility 0.3s;
+    color: #f0f;
+  }
+
+  div.startmenu * {
+    color: inherit;
   }
   .startmenu.docked {
     bottom: 50px;
@@ -100,7 +118,6 @@
   .bottomPane,
   .startmenu {
     box-sizing: border-box;
-    color: white;
   }
 
   .rightPane {
@@ -111,6 +128,18 @@
     height: calc(100% - 75px);
     padding: 20px;
     background-color: var(--rightPane);
+  }
+
+  .leftPane {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% - 200px);
+    height: calc(100% - 75px);
+    background-color: #ffffff02;
+    border-radius: 10px;
+    padding: 20px;
+    color: inherit;
   }
 
   .bottomPane {
@@ -158,8 +187,8 @@
   .rightPane button span.material-icons {
     font-size: 20px;
   }
-
+  /* 
   .rightPane hr {
     border: #fff2 1px solid;
-  }
+  } */
 </style>

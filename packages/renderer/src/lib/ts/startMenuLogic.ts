@@ -6,14 +6,20 @@ export const startMenuActions: StartMenuAction[] = [
     name: "Shut Down",
     icon: "power_settings_new",
     action: shutdown,
-  },  {
+  },
+  {
     name: "Log Off",
     icon: "lock",
     action: () => powerState.set(PowerState.logging_off),
-  },  {
+  },
+  {
     name: "Crash",
     icon: "cancel",
-    action: () => crash("MANUALLY_INITIATED_CRASH","The system crashed because of a user performed crash."),
+    action: () =>
+      crash(
+        "MANUALLY_INITIATED_CRASH",
+        "The system crashed because of a user performed crash."
+      ),
   },
 ];
 

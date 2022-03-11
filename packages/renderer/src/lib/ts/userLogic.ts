@@ -103,6 +103,7 @@ export interface UserTemplate {
 export interface TaskbarData {
   position: TaskbarPosition;
   docked?: boolean;
+  captions: boolean;
 }
 
 export interface StartMenuData {
@@ -117,6 +118,7 @@ const defaultUserData: UserTemplate = {
   taskbar: {
     position: TaskbarPosition.bottom,
     docked: false,
+    captions: true,
   },
   startmenu: {
     small: false,

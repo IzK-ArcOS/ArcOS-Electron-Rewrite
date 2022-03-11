@@ -1,6 +1,5 @@
 <script lang="ts">
-import { notifyStartService } from "../ts/logLogic";
-
+  import { notifyStartService } from "../ts/logLogic";
 
   interface QuickAction {
     icon: string;
@@ -20,10 +19,10 @@ import { notifyStartService } from "../ts/logLogic";
       action: () => {
         alert("Restart");
       },
-    }
+    },
   ];
 
-  notifyStartService("Login: QuickActions: Populating Quick Actions")
+  notifyStartService("Login: QuickActions: Populating Quick Actions");
 </script>
 
 <div class="quickactions">

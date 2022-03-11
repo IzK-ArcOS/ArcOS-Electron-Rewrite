@@ -1,55 +1,44 @@
 import { Themes } from "./themeLogic";
 import type { UserTemplate } from "./userLogic";
-import type { Window } from "./appLogic";
+import type { WindowData as WindowData } from "./appLogic";
+import { Windows } from "./stores";
+import { get } from "svelte/store";
 
 export function dragWindow(elmnt: HTMLElement) {
   elmnt = elmnt as HTMLDivElement;
+  const titlebar = elmnt.childNodes[0]! as HTMLDivElement;
 
-  elmnt.addEventListener("mousedown", () => {
-    const titlebar = elmnt.childNodes[0]! as HTMLDivElement;
-    let pos1 = 0,
-      pos2 = 0,
-      pos3 = 0,
-      pos4 = 0;
-    if (titlebar) {
-      titlebar.onmousedown = dragMouseDown;
-    } else {
-      elmnt.onmousedown = dragMouseDown;
-    }
+  elmnt.addEventListener("mousedown", (e: MouseEvent) => {
+    if (e.composedPath().includes(titlebar)) {
+      const target = elmnt;
+      let xA: number, yA: number, xB: number, yB: number;
 
-    function dragMouseDown(e: MouseEvent) {
-      e = e || window.event;
       e.preventDefault();
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-      document.onmousemove = elementDrag;
+
+      document.onmousemove = (e: MouseEvent) => {
+        xA = xB - e.clientX;
+        yA = yB - e.clientY;
+
+        xB = e.clientX;
+        yB = e.clientY;
+
+        target.style.top = target.offsetTop - yA + "px";
+        target.style.left = target.offsetLeft - xA + "px";
+      };
+
+      document.onmouseup = () => {
+        document.onmouseup = null;
+        document.onmousemove = null;
+      };
+
       toFront(elmnt);
-    }
-
-    function elementDrag(e: MouseEvent) {
-      e = e || window.event;
-      e.preventDefault();
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      elmnt.style.top = elmnt.offsetTop - pos2 + "px";
-      elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
-    }
-
-    function closeDragElement() {
-      document.onmouseup = null;
-      document.onmousemove = null;
-      document.ontouchmove = null;
-      document.ontouchend = null;
     }
   });
 }
 
 export function generateWindowStyle(
   userData: UserTemplate,
-  app: Window
+  app: WindowData
 ): string {
   const theme = Themes.get(userData.theme)!;
 
@@ -61,9 +50,9 @@ export function generateWindowStyle(
 
   const colorCSS = `background-color: ${backgr}; color: ${color};`;
 
-  const startPosCSS = ``; /* `top: ${app.startPos?.y || 50}px; left: ${
-    app.startPos?.x || 50
-  }px;` */
+  const startPosCSS = `top: ${app.pos?.y || 50}px; left: ${
+    app.pos?.x || 50
+  }px;`;
 
   const maxSizeCSS = app.maxSize
     ? `max-width: ${app.maxSize?.w}; max-height: ${app.maxSize?.h}`
@@ -82,6 +71,73 @@ export function toFront(element: HTMLElement) {
   maxZIndex += 10;
 
   element.style.zIndex = `${maxZIndex}`;
+}
+
+export function minimizeWindow(wD: WindowData) {
+  const lW = get(Windows);
+
+  for (let i = 0; i < lW.length; i++) {
+    if (lW[i].id == wD.id && lW[i].name == wD.name) {
+      lW[i].state.min = !lW[i].state.min;
+    }
+  }
+
+  Windows.set(lW);
+}
+
+export function openWindow(wD: WindowData) {
+  const lW = get(Windows);
+
+  for (let i = 0; i < lW.length; i++) {
+    if (lW[i].id == wD.id && lW[i].name == wD.name) {
+      lW[i].state.min = false;
+      lW[i].state.cls = false;
+
+      toFront(document.getElementById(`window#${wD.id}`)!);
+    }
+  }
+
+  Windows.set(lW);
+}
+
+export function closeWindow(wD: WindowData) {
+  const lW = get(Windows);
+
+  for (let i = 0; i < lW.length; i++) {
+    if (lW[i].id == wD.id && lW[i].name == wD.name) {
+      lW[i].state.cls = true;
+    }
+  }
+
+  Windows.set(lW);
+}
+
+export function maximizeWindow(e: HTMLElement, wD: WindowData) {
+  const lW = get(Windows);
+
+  for (let i = 0; i < lW.length; i++) {
+    if (lW[i].id == wD.id && lW[i].name == wD.name) {
+      if (!lW[i].state.max) {
+        lW[i].size = {
+          w: e.clientWidth,
+          h: e.clientHeight,
+        };
+        lW[i].pos = {
+          x: parseInt(e.style.left.replace("px", "")),
+          y: parseInt(e.style.top.replace("px", "")),
+        };
+      } else {
+        e.style.top = `${lW[i].pos!.y || 50}px`;
+        e.style.left = `${lW[i].pos!.x || 50}px`;
+        e.style.width = `${lW[i].size!.w || 300}px`;
+        e.style.height = `${lW[i].size!.h || 300}px`;
+      }
+
+      lW[i].state.max = !lW[i].state.max;
+    }
+  }
+
+  Windows.set(lW);
 }
 
 export let maxZIndex: number = 10;

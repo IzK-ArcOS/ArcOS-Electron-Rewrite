@@ -7,7 +7,7 @@
   import { changePwrState, notifyStartService } from "./ts/logLogic";
   import { powerState } from "./ts/stores";
   import { PowerState } from "./ts/powerLogic";
-import BlankOut from "./BlankOut.svelte";
+  import BlankOut from "./BlankOut.svelte";
 
   notifyStartService("LoginScreen");
 
@@ -54,7 +54,7 @@ import BlankOut from "./BlankOut.svelte";
     </div>
     <QuickActions />
   </div>
-  <BlankOut delay={2000}/>
+  <BlankOut delay={2000} />
 {:else}
   <ToDesktop username={lognNm} />
 {/if}

@@ -1,8 +1,11 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
   import "../../css/general.scss";
   import BlankOut from "../BlankOut.svelte";
   import { PowerState } from "../ts/powerLogic";
-  import { powerState } from "../ts/stores";
+  import { powerState, Windows } from "../ts/stores";
+  import { setUserPreference, Theme } from "../ts/userLogic";
   import Apps from "./Apps.svelte";
   import Taskbar from "./Taskbar.svelte";
   import Wallpaper from "./Wallpaper.svelte";
@@ -14,6 +17,10 @@
   setTimeout(() => {
     powerState.set(PowerState.desktop);
   }, 3000);
+
+  onMount(() =>
+    console.log(setUserPreference(username, "theme", Theme.darkround))
+  );
 </script>
 
 <div class="desktop">

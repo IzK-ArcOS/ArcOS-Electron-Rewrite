@@ -14,7 +14,11 @@
     actCenterOpened,
     startMenuOpened,
     userDataStore,
+    Windows,
   } from "../ts/stores";
+  import type { WindowData } from "../ts/appLogic";
+  import AppIcon from "./Taskbar/AppIcon.svelte";
+  import app from "../..";
 
   export let username: string;
 
@@ -22,12 +26,15 @@
   let tbbtm: boolean = false;
   let backg: string;
   let docked: boolean = false;
+  let tbCapts: boolean;
   let startMenuOpen: boolean;
   let actCenterOpen: boolean;
   let rounded: boolean;
+  let appList: WindowData[];
+  let userData: UserTemplate;
 
   function update(input: UserTemplate | boolean) {
-    const userData: UserTemplate = input as UserTemplate;
+    userData = input as UserTemplate;
 
     theme = userData.theme;
     tbbtm = userData.taskbar.position
@@ -38,6 +45,7 @@
     rounded = Themes.get(userData.theme)
       ? Themes.get(userData.theme)?.rounded!
       : true;
+    tbCapts = userData.taskbar.captions;
   }
 
   update(getUserData(username));
@@ -45,6 +53,7 @@
   userDataStore.subscribe(update);
   startMenuOpened.subscribe((value) => (startMenuOpen = value));
   actCenterOpened.subscribe((value) => (actCenterOpen = value));
+  Windows.subscribe((value) => (appList = value));
 
   const toggleStart = () => startMenuOpened.set(!startMenuOpen);
   const toggleActCenter = () => actCenterOpened.set(!actCenterOpen);
@@ -63,6 +72,11 @@
   <button class="startbutton" on:click={toggleStart}>
     <img src={systemIcon} alt="startButton" />
   </button>
+  <div class="windows">
+    {#each appList as app}
+      <AppIcon {app} {userData} />
+    {/each}
+  </div>
 </div>
 
 <Startmenu visible={startMenuOpen} {username} />
@@ -75,6 +89,10 @@
     width: calc(100% - 20px);
     height: 40px;
     border-radius: 7.5px;
+  }
+
+  div.taskbar * {
+    vertical-align: middle;
   }
 
   div.taskbar.ontop {
@@ -104,5 +122,9 @@
 
   button.startbutton img {
     height: 25px;
+  }
+
+  div.windows {
+    display: inline-block;
   }
 </style>

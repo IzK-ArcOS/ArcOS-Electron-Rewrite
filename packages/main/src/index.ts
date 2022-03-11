@@ -1,5 +1,4 @@
 import { app, BrowserWindow, globalShortcut } from "electron";
-import { readdir } from "fs/promises";
 import { join } from "path";
 import { URL } from "url";
 
@@ -50,8 +49,6 @@ const createWindow = async () => {
     });
 
     mainWindow?.show();
-
-    console.log(readdir("\\"))
   });
 
   const pageUrl =

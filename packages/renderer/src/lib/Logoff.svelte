@@ -21,7 +21,7 @@
   }, 4000);
 </script>
 
-<div class="background"/>
+<div class="background" />
 <div class="welcome" class:blur>
   <div class="content">
     <img src={dfltpfp} height="150px" alt="Profile" class="profile" />
@@ -41,11 +41,11 @@
   }
 
   div.background {
-    width:100%;
-    height:100%;
-    position:fixed;
-    top:0;
-    left:0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
     background-image: url("../bg/img16.png");
     background-position: center;
     background-repeat: no-repeat;
@@ -81,10 +81,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
   }
 
   * {
-    color:white;
+    color: white;
   }
 </style>

@@ -5,10 +5,10 @@ export function shutdown() {
 }
 
 export function logoff() {
-  powerState.set(PowerState.logging_off)
+  powerState.set(PowerState.logging_off);
 }
 
-export function crash(title:string,messg:string) {
+export function crash(title: string, messg: string) {
   BSODTitle.set(title);
   BSODMessg.set(messg);
 
@@ -24,5 +24,5 @@ export enum PowerState {
   logging_off,
   restarting,
   shutting_down,
-  crashed
+  crashed,
 }
