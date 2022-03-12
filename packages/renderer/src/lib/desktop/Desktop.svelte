@@ -4,7 +4,7 @@
   import "../../css/general.scss";
   import BlankOut from "../BlankOut.svelte";
   import { PowerState } from "../ts/powerLogic";
-  import { powerState, Windows } from "../ts/stores";
+  import { openedWindows, powerState, Windows } from "../ts/stores";
   import { setUserPreference, Theme } from "../ts/userLogic";
   import Apps from "./Apps.svelte";
   import Taskbar from "./Taskbar.svelte";
@@ -21,6 +21,9 @@
   onMount(() =>
     console.log(setUserPreference(username, "theme", Theme.darkround))
   );
+
+  openedWindows.set([]);
+  openedWindows.subscribe((v) => console.log(v))
 </script>
 
 <div class="desktop">

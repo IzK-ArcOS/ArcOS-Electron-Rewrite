@@ -1,7 +1,7 @@
 import { Themes } from "./themeLogic";
 import type { UserTemplate } from "./userLogic";
 import type { WindowData as WindowData } from "./appLogic";
-import { Windows } from "./stores";
+import { openedWindows, Windows } from "./stores";
 import { get } from "svelte/store";
 
 export function dragWindow(elmnt: HTMLElement) {
@@ -94,10 +94,31 @@ export function openWindow(wD: WindowData) {
       lW[i].state.cls = false;
 
       toFront(document.getElementById(`window#${wD.id}`)!);
+
+      const openWin = get(openedWindows);
+      const winData = { name: lW[i].name, id: lW[i].id };
+
+      if (!isOpenedWindow(winData.id,winData.name)) {
+        openWin.push(winData);
+      }
+
+      openedWindows.set(openWin);
     }
   }
 
   Windows.set(lW);
+}
+
+export function isOpenedWindow(id:string,name:string): boolean {
+  const openWin = get(openedWindows);
+
+  for (let i=0;i<openWin.length;i++) {
+    if (openWin[i].name == name && openWin[i].id == id) {
+      return true;
+    }
+    continue;
+  }
+  return false;
 }
 
 export function closeWindow(wD: WindowData) {
@@ -106,6 +127,18 @@ export function closeWindow(wD: WindowData) {
   for (let i = 0; i < lW.length; i++) {
     if (lW[i].id == wD.id && lW[i].name == wD.name) {
       lW[i].state.cls = true;
+
+      const openWin = get(openedWindows);
+      const winData = { name: lW[i].name, id: lW[i].id };
+
+      for (let i = 0; i < openWin.length; i++) {
+        if (openWin[i].id == winData.id && openWin[i].name == winData.name) {
+          openWin.splice(i,1);
+        }
+        continue;
+      }
+
+      openedWindows.set(openWin);
     }
   }
 

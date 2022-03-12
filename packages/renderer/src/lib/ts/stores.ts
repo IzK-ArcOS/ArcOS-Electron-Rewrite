@@ -10,3 +10,4 @@ export const actCenterOpened = writable<boolean>(false); // Action Center
 export const BSODTitle = writable<string>(""); // Crash Title
 export const BSODMessg = writable<string>(""); // Crash Message
 export const Windows = writable<WindowData[]>([]);
+export const openedWindows = writable<{ name: string; id: string }[]>([]);

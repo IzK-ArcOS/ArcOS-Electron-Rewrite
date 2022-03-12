@@ -12,11 +12,16 @@
 
   let theme: ThemeData;
 
-  userDataStore.subscribe((v) => {
+  function update(v: UserTemplate|boolean) {
     userData = v as UserTemplate;
 
     theme = Themes.get(userData.theme)!;
-  });
+
+  }
+
+  update(userData);
+
+  userDataStore.subscribe(update);
 
   userData = get(userDataStore) as UserTemplate;
 
