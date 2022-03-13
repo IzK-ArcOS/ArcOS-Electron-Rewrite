@@ -46,12 +46,18 @@ import { minimizeWindow, openWindow } from "../../ts/windowLogic";
   button {
     background-color: transparent;
     border: none;
+    height:40px;
+    padding: 0 10px;
   }
 
   button * {
     height: 20px;
     vertical-align: middle;
     color: inherit;
+  }
+  
+  button:hover {
+    background-color: #0003;
   }
 
   span.hidden {

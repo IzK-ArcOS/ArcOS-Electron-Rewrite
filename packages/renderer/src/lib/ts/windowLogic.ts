@@ -43,28 +43,37 @@ export function generateWindowStyle(
   const theme = Themes.get(userData.theme)!;
 
   let str = "";
-  
+
   if (theme) {
     const backgr = theme.variables.windowBackground;
     const color = theme.variables.fontColor;
     const border = theme.variables.windowBorder;
-  
+
     const colorCSS = `background-color: ${backgr}; color: ${color};`;
 
     const startPosCSS = `top: ${app.pos?.y || 50}px; left: ${
       app.pos?.x || 50
     }px;`;
-  
+
     const maxSizeCSS = app.maxSize
-      ? `max-width: ${app.maxSize?.w}; max-height: ${app.maxSize?.h}`
+      ? `max-width: ${app.maxSize?.w}px; max-height: ${app.maxSize?.h}px`
       : "";
-  
+
+      const minSizeCSS = app.minSize
+      ? `min-width: ${app.minSize?.w}px; min-height: ${app.minSize?.h}px`
+      : "";
+
+    const sizeCSS = app.size
+      ? `width: ${app.size?.w}px; height: ${app.size?.h}px`
+      : "";
+
+    console.log(backgr,color,border,startPosCSS,maxSizeCSS,sizeCSS,minSizeCSS)
+
+
     str = `border: ${border}; ${colorCSS} resize: ${
       app.resizable ? "both" : "none"
-    }; ${startPosCSS} ${maxSizeCSS};`;
+    }; ${startPosCSS} ${maxSizeCSS}; ${sizeCSS}; ${minSizeCSS}`;
   }
-
-
 
   return str;
 }
@@ -102,7 +111,7 @@ export function openWindow(wD: WindowData) {
       const openWin = get(openedWindows);
       const winData = { name: lW[i].name, id: lW[i].id };
 
-      if (!isOpenedWindow(winData.id,winData.name)) {
+      if (!isOpenedWindow(winData.id, winData.name)) {
         openWin.push(winData);
       }
 
@@ -113,10 +122,10 @@ export function openWindow(wD: WindowData) {
   Windows.set(lW);
 }
 
-export function isOpenedWindow(id:string,name:string): boolean {
+export function isOpenedWindow(id: string, name: string): boolean {
   const openWin = get(openedWindows);
 
-  for (let i=0;i<openWin.length;i++) {
+  for (let i = 0; i < openWin.length; i++) {
     if (openWin[i].name == name && openWin[i].id == id) {
       return true;
     }
@@ -137,7 +146,7 @@ export function closeWindow(wD: WindowData) {
 
       for (let i = 0; i < openWin.length; i++) {
         if (openWin[i].id == winData.id && openWin[i].name == winData.name) {
-          openWin.splice(i,1);
+          openWin.splice(i, 1);
         }
         continue;
       }
@@ -177,8 +186,8 @@ export function maximizeWindow(e: HTMLElement, wD: WindowData) {
   Windows.set(lW);
 }
 
-export function getWindowData(name:string,id:string): WindowData|false {
-  for (let i=0;i<get(Windows).length;i++) {
+export function getWindowData(name: string, id: string): WindowData | false {
+  for (let i = 0; i < get(Windows).length; i++) {
     const window = get(Windows)[i];
     if (window.id == id && window.name == name) {
       return window;

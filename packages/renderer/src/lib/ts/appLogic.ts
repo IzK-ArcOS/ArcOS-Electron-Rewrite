@@ -1,32 +1,19 @@
 import type { SvelteComponentDev } from "svelte/internal";
-import testApp from "../apps/testApp.svelte";
+import debuggerApp from "../apps/debugger.svelte";
 
 export const DefaultAppImports: WindowData[] = [
   {
-    content: testApp,
-    id: "test1",
-    name: "Test Application",
+    content: debuggerApp,
+    id: "debugger",
+    name: "ArcOS Debugger",
     builtin: true,
     headless: false,
     resizable: true,
     controls: { min: true, max: true, cls: true },
     pos: { x: 810, y: 390 },
-    maxSize: { w: 100, h: 100 },
+    minSize: { w: 500, h: 300 },
     state: { min: true, max: false, cls: true },
     register: true,
-  },
-  {
-    content: testApp,
-    id: "test2",
-    name: "Test Application (2)",
-    builtin: true,
-    headless: true,
-    resizable: false,
-    controls: { min: true, max: true, cls: true },
-    pos: { x: 510, y: 390 },
-    maxSize: { w: 100, h: 100 },
-    state: { min: false, max: false, cls: true },
-    register: false,
   },
 ];
 

@@ -1,0 +1,91 @@
+::-webkit-scrollbar {
+  width: 5px;
+  cursor: default;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  cursor: default;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fff2;
+  transition: background-color 0.25s;
+  cursor: default;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #fff3;
+  cursor: default;
+}
+.window .body a {
+  text-decoration: none;
+  color: dodgerblue;
+}
+
+.window .body button,
+.window .body button.transparent:hover {
+  background-color: #fff2;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 5px 0;
+  color: inherit;
+  min-width: 80px;
+  min-height: 38px;
+  transition: background-color 0.15s;
+  vertical-align: middle;
+}
+
+.window .body input,
+.window .body select {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  background-color: #fff2;
+  color: inherit;
+  max-height: 38px;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+.window .body button:disabled {
+  opacity: 0.5;
+}
+
+.window .body button.material-icons {
+  min-width: unset;
+  padding: 10px;
+  font-size: inherit;
+}
+
+.window .body button.maxwidth {
+  width: 100%;
+}
+
+.window .body button:hover {
+  background-color: #fff3;
+}
+
+.window .body button:active,
+.window .body button.transparent:active {
+  background-color: #0001;
+}
+
+.window .body button.transparent {
+  background-color: transparent;
+}
+
+.window .body h3.header {
+  margin: 0;
+  margin-top:10px;
+  margin-bottom:5px;
+}
+
+.window .body h4.subheader {
+  margin:0;
+  margin-bottom:10px;
+  font-weight: 100;
+  opacity: 0.7;
+}

@@ -26,6 +26,7 @@
   let mind: boolean;
   let maxd: boolean;
   let clsd: boolean;
+  let ndkd: boolean;
   let elmnt: HTMLElement;
 
   function update(uData: UserTemplate | boolean) {
@@ -36,6 +37,8 @@
     rounded = Themes.get(userData.theme)
       ? Themes.get(userData.theme)?.rounded!
       : true;
+
+    ndkd = !userData.taskbar.docked!;
 
     if (!get(Windows).includes(app)) {
       const newWindowList = get(Windows);
@@ -65,7 +68,6 @@
     elmnt.focus();
   });
 
-
   function clk() {
     closeStart();
 
@@ -93,18 +95,18 @@
   class:maxd
   class:mind
   class:clsd
+  class:ndkd
   id="window#{app.id}"
   on:mousedown={clk}
-  on:dblclick={max}
   bind:this={elmnt}
 >
   {#if !app.headless}
-    <div class="titlebar">
+    <div class="titlebar" on:dblclick={max}>
       <img class="icon" alt="Program Icon" src={defIcon} />
       <p class="title">{app.name}</p>
       <div class="controls">
         <button
-          class="min material-icons"  
+          class="min material-icons"
           disabled={!app.controls.min}
           on:click={min}>minimize</button
         >
@@ -136,6 +138,7 @@
     overflow: auto;
     border-radius: 10px;
     transition: opacity 0.3s, visibility 0.3s;
+    backdrop-filter: blur(30px);
   }
 
   div.window.maxd {
@@ -152,6 +155,12 @@
     border-radius: 0 !important;
     border: none !important;
     box-sizing: border-box;
+  }
+
+  div.window.maxd.ndkd {
+    height: calc(100% - 60px) !important;
+    min-height: calc(100% - 60px) !important;
+    max-height: calc(100% - 60px) !important;
   }
 
   div.window.mind {
@@ -203,10 +212,10 @@
     font-size: 15px;
     color: inherit;
     padding: 0;
-    transition:opacity 0.3s, background-color 0.3s;
+    transition: opacity 0.3s, background-color 0.3s;
     border-radius: 2.5px;
   }
-  
+
   div.window div.titlebar div.controls button:hover {
     opacity: 0.8;
     background-color: #0001;
@@ -235,5 +244,8 @@
     top: 30px;
     box-sizing: border-box;
     padding: 10px;
+    overflow: auto;
+    max-height: calc(100% - 30px);
+    width: 100%;
   }
 </style>
