@@ -65,7 +65,6 @@
     elmnt.focus();
   });
 
-  console.warn();
 
   function clk() {
     closeStart();

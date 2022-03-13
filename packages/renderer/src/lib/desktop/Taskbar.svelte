@@ -12,6 +12,7 @@
   import { Themes } from "../ts/themeLogic";
   import {
     actCenterOpened,
+    openedWindows,
     startMenuOpened,
     userDataStore,
     Windows,
@@ -19,6 +20,8 @@
   import type { WindowData } from "../ts/appLogic";
   import AppIcon from "./Taskbar/AppIcon.svelte";
   import app from "../..";
+  import { getWindowData } from "../ts/windowLogic";
+  import { get } from "svelte/store";
 
   export let username: string;
 
@@ -30,14 +33,14 @@
   let startMenuOpen: boolean;
   let actCenterOpen: boolean;
   let rounded: boolean;
-  let appList: WindowData[];
+  let appList: { id: string; name: string }[];
   let userData: UserTemplate;
 
   function update(input: UserTemplate | boolean) {
     userData = input as UserTemplate;
 
     theme = userData.theme;
-    tbbtm = userData.taskbar.position
+    tbbtm = userData.taskbar
       ? userData.taskbar.position == TaskbarPosition.bottom
       : false;
     backg = Themes.get(theme)!.variables.taskbarBackground;
@@ -53,7 +56,7 @@
   userDataStore.subscribe(update);
   startMenuOpened.subscribe((value) => (startMenuOpen = value));
   actCenterOpened.subscribe((value) => (actCenterOpen = value));
-  Windows.subscribe((value) => (appList = value));
+  openedWindows.subscribe((v) => {appList = v})
 
   const toggleStart = () => startMenuOpened.set(!startMenuOpen);
   const toggleActCenter = () => actCenterOpened.set(!actCenterOpen);
@@ -74,7 +77,7 @@
   </button>
   <div class="windows">
     {#each appList as app}
-      <AppIcon {app} {userData} />
+      <AppIcon app={getWindowData(app.name, app.id)} {userData} />
     {/each}
   </div>
 </div>

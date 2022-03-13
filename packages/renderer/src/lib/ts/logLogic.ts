@@ -1,6 +1,6 @@
+import { get } from "svelte/store";
 import { PowerState } from "./powerLogic";
-
-let loadedModules = [];
+import { kernelLog } from "./stores";
 
 export function notifyStartService(name: string, forControl = "") {
   let today = new Date();
@@ -25,37 +25,6 @@ export function notifyStartService(name: string, forControl = "") {
   }
 }
 
-export function notifyLoadApp(
-  app: string,
-  mod: string = "windowLogic.loadWindow"
-) {
-  let today = new Date();
-  let hour = today.getHours().toString().padStart(2, "0");
-  let minute = today.getMinutes().toString().padStart(2, "0");
-  let second = today.getSeconds().toString().padStart(2, "0");
-  let milisecond = today.getMilliseconds().toString().padStart(3, "0");
-  console.info(
-    `%c${hour}:${minute}:${second}.${milisecond}%c${mod}%c Importing ${app}`,
-    "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#666;margin-right:10px",
-    "color: #000;padding:2.5px 5px;border-radius:2.5px;background-color:#d3869b;",
-    "color: #d3869b"
-  );
-}
-export function startModule(mod: string) {
-  let today = new Date();
-  let hour = today.getHours().toString().padStart(2, "0");
-  let minute = today.getMinutes().toString().padStart(2, "0");
-  let second = today.getSeconds().toString().padStart(2, "0");
-  let milisecond = today.getMilliseconds().toString().padStart(3, "0");
-  loadedModules.push(mod);
-  console.info(
-    `%c${hour}:${minute}:${second}.${milisecond}%cJS%c Module registered: ${mod}`,
-    "color: #fff;padding:2.5px 5px;border-radius:2.5px;background-color:#666;margin-right:10px",
-    "color: #000;padding:2.5px 5px;border-radius:2.5px;background-color:#fabd2f;",
-    "color: #fabd2f"
-  );
-}
-
 export function changePwrState(powerState: PowerState) {
   let today = new Date();
   let hour = today.getHours().toString().padStart(2, "0");
@@ -68,4 +37,26 @@ export function changePwrState(powerState: PowerState) {
     "color: #000;padding:2.5px 5px;border-radius:2.5px;background-color:#fabd2f;",
     "color: #fabd2f"
   );
+}
+
+export function Log(log:KernelLog) {
+  const kLog = get(kernelLog);
+
+  log.timestamp = new Date().getTime();
+
+  kLog.push(log)
+}
+
+export interface KernelLog {
+  title:string;
+  content:string;
+  priority:LogPriority;
+  timestamp?:number;
+}
+
+export enum LogPriority {
+  status,
+  warning,
+  critical,
+  fatal
 }

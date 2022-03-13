@@ -4,11 +4,18 @@
   import "../../css/general.scss";
   import BlankOut from "../BlankOut.svelte";
   import { PowerState } from "../ts/powerLogic";
-  import { openedWindows, powerState, Windows } from "../ts/stores";
-  import { setUserPreference, Theme } from "../ts/userLogic";
+  import {
+    openedWindows,
+    powerState,
+    userDataStore,
+    Windows,
+  } from "../ts/stores";
+  import { getUserData, setUserPreference, Theme } from "../ts/userLogic";
+  import type { UserTemplate } from "../ts/userLogic";
   import Apps from "./Apps.svelte";
   import Taskbar from "./Taskbar.svelte";
   import Wallpaper from "./Wallpaper.svelte";
+  import { get } from "svelte/store";
 
   export let username: string;
 
@@ -18,12 +25,11 @@
     powerState.set(PowerState.desktop);
   }, 3000);
 
-  onMount(() =>
-    console.log(setUserPreference(username, "theme", Theme.darkround))
-  );
+  onMount(() => {
+
+  });
 
   openedWindows.set([]);
-  openedWindows.subscribe((v) => console.log(v))
 </script>
 
 <div class="desktop">

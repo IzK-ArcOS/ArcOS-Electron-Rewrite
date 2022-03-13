@@ -4,13 +4,11 @@
   import User from "./login/UserSelector.svelte";
   import { createUser, isUser } from "./ts/userLogic";
   import buf from "buffer/";
-  import { changePwrState, notifyStartService } from "./ts/logLogic";
+  import { changePwrState } from "./ts/logLogic";
   import { powerState } from "./ts/stores";
   import { PowerState } from "./ts/powerLogic";
   import BlankOut from "./BlankOut.svelte";
-
-  notifyStartService("LoginScreen");
-
+  
   const Buffer = buf.Buffer;
 
   createUser("TechWorldInc");
@@ -23,8 +21,6 @@
     if (isUser(localStorage.key(i))) users.push(localStorage.key(i)!);
 
   function loginAs(user: string) {
-    notifyStartService("loginAs: logging in as " + user);
-
     lognNm = Buffer.from(user, "base64").toString();
     powerState.set(PowerState.logging_in);
   }

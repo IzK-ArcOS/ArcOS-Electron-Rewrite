@@ -42,25 +42,29 @@ export function generateWindowStyle(
 ): string {
   const theme = Themes.get(userData.theme)!;
 
-  const backgr = theme.variables.windowBackground;
-  const color = theme.variables.fontColor;
-  const border = theme.variables.windowBorder;
-
   let str = "";
+  
+  if (theme) {
+    const backgr = theme.variables.windowBackground;
+    const color = theme.variables.fontColor;
+    const border = theme.variables.windowBorder;
+  
+    const colorCSS = `background-color: ${backgr}; color: ${color};`;
 
-  const colorCSS = `background-color: ${backgr}; color: ${color};`;
+    const startPosCSS = `top: ${app.pos?.y || 50}px; left: ${
+      app.pos?.x || 50
+    }px;`;
+  
+    const maxSizeCSS = app.maxSize
+      ? `max-width: ${app.maxSize?.w}; max-height: ${app.maxSize?.h}`
+      : "";
+  
+    str = `border: ${border}; ${colorCSS} resize: ${
+      app.resizable ? "both" : "none"
+    }; ${startPosCSS} ${maxSizeCSS};`;
+  }
 
-  const startPosCSS = `top: ${app.pos?.y || 50}px; left: ${
-    app.pos?.x || 50
-  }px;`;
 
-  const maxSizeCSS = app.maxSize
-    ? `max-width: ${app.maxSize?.w}; max-height: ${app.maxSize?.h}`
-    : "";
-
-  str = `border: ${border}; ${colorCSS} resize: ${
-    app.resizable ? "both" : "none"
-  }; ${startPosCSS} ${maxSizeCSS};`;
 
   return str;
 }
@@ -171,6 +175,17 @@ export function maximizeWindow(e: HTMLElement, wD: WindowData) {
   }
 
   Windows.set(lW);
+}
+
+export function getWindowData(name:string,id:string): WindowData|false {
+  for (let i=0;i<get(Windows).length;i++) {
+    const window = get(Windows)[i];
+    if (window.id == id && window.name == name) {
+      return window;
+    }
+    continue;
+  }
+  return false;
 }
 
 export let maxZIndex: number = 10;

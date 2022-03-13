@@ -1,9 +1,5 @@
 <script lang="ts">
   import Boot from "./lib/Boot.svelte";
-  import { notifyStartService } from "./lib/ts/logLogic";
-
-  console.clear();
-  notifyStartService("ArcOS runtime: mounting App to div#app");
 </script>
 
 <div>

@@ -1,5 +1,4 @@
 import buf from "buffer/";
-import { notifyStartService } from "./logLogic";
 import { userDataStore } from "./stores";
 const Buffer = buf.Buffer;
 
@@ -20,7 +19,6 @@ export function isUser(username: string | null): boolean {
 }
 
 export function createUser(username: string): boolean {
-  notifyStartService(`UserLogic: CreateUser: Creating user ${username}...`);
   username = Buffer.from(username).toString("base64");
 
   if (localStorage.getItem(username)) return false;
@@ -38,9 +36,6 @@ export function createUser(username: string): boolean {
 }
 
 export function getUserData(username: string): UserTemplate | boolean {
-  notifyStartService(
-    `UserLogic: getUserData: Getting userData for ${username}...`
-  );
   username = Buffer.from(username).toString("base64");
 
   if (isUser(username)) {

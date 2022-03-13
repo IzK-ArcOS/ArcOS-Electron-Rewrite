@@ -6,9 +6,12 @@
   import type { WindowData } from "../../ts/appLogic";
   import type { ThemeData } from "../../ts/themeLogic";
   import type { UserTemplate } from "../../ts/userLogic";
+import { minimizeWindow, openWindow } from "../../ts/windowLogic";
 
-  export let app: WindowData;
+  export let app: WindowData|false;
   export let userData: UserTemplate;
+
+  const cApp = app as WindowData;
 
   let theme: ThemeData;
 
@@ -23,18 +26,20 @@
 
   userDataStore.subscribe(update);
 
-  userData = get(userDataStore) as UserTemplate;
+  userData = get(userDataStore) as UserTemplate
 
   theme = Themes.get(userData.theme)!;
 
   let css: string = `color: ${theme.variables.fontColor};`;
 
-  function click() {}
+  function click() {
+    minimizeWindow(cApp);
+  }
 </script>
 
 <button on:click={click} style={css}>
   <img src={defIcon} alt="Application Icon" />
-  <span class:hidden={!userData.taskbar.captions}>{app.name}</span>
+  <span class:hidden={!userData.taskbar.captions}>{cApp.name}</span>
 </button>
 
 <style scoped>
@@ -47,5 +52,9 @@
     height: 20px;
     vertical-align: middle;
     color: inherit;
+  }
+
+  span.hidden {
+    display:none;
   }
 </style>

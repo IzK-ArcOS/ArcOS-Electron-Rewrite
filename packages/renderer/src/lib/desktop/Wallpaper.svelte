@@ -23,7 +23,6 @@
 
   userDataStore.subscribe(update);
 
-  console.log(wallpaper, getUserData(username));
 </script>
 
 <div

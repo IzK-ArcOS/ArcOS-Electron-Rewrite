@@ -1,7 +1,6 @@
 <script lang="ts">
   import buf from "buffer/";
   import pfp from "../../img/profilePictures/undefined.png";
-import { notifyStartService } from "../ts/logLogic";
 
   export let user: string;
 
@@ -10,8 +9,6 @@ import { notifyStartService } from "../ts/logLogic";
   let ProfilePicture = pfp;
 
   user = Buffer.from(user, "base64").toString();
-
-  notifyStartService("Login: UserSelector: Populating UserSelector")
 </script>
 
 <button class="user" id="USER#{user}">

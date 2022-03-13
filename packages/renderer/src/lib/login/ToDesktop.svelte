@@ -2,7 +2,6 @@
   import dfltpfp from "../../img/profilePictures/undefined.png";
   import spinner from "../../img/spinner.svg";
   import Desktop from "../desktop/Desktop.svelte";
-  import { notifyStartService } from "../ts/logLogic";
   import { powerState, userDataStore } from "../ts/stores";
   import { getUserData } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
@@ -32,8 +31,6 @@
   }
 
   powerState.subscribe(updatePowerState);
-
-  notifyStartService("ToDesktop: Redirecting to Desktop...");
 
   userDataStore.set(getUserData(username) as UserTemplate);
 </script>

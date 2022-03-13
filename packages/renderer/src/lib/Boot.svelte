@@ -3,15 +3,11 @@
   import logo from "../img/systemIcon.svg";
 
   import "../css/progressbar.scss";
-  import { notifyStartService } from "./ts/logLogic";
   import { PowerState } from "./ts/powerLogic";
   import { powerState } from "./ts/stores";
   import Crash from "./Crash.svelte";
-
   export let status: string;
   export let duration: number;
-
-  notifyStartService("Boot");
 
   let visible: boolean = true;
   let pwrState: PowerState;
