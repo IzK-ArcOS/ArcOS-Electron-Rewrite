@@ -103,9 +103,9 @@ const setupPreloadPackageWatcher = (viteDevServer) => {
     });
 
     await viteDevServer.listen();
-
+/* 
     await setupPreloadPackageWatcher(viteDevServer);
-    await setupMainPackageWatcher(viteDevServer);
+    await setupMainPackageWatcher(viteDevServer); */
   } catch (e) {
     console.error(e);
     process.exit(1);

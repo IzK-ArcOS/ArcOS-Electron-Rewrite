@@ -22,7 +22,6 @@
   update(getUserData(username));
 
   userDataStore.subscribe(update);
-
 </script>
 
 <div

@@ -1,6 +1,6 @@
 <script lang="ts">
   import "../../css/windowControls.scss";
-import Warning from "../desktop/Window/Warning.svelte";
+  import Warning from "../desktop/Window/Warning.svelte";
   import type { WindowData } from "../ts/appLogic";
 
   import { openedWindows } from "../ts/stores";
@@ -8,6 +8,10 @@ import Warning from "../desktop/Window/Warning.svelte";
 
   let openWin: { name: string; id: string }[] = [];
   let openWinData: WindowData[] = [];
+
+  export let app: WindowData;
+
+  app;
 
   openedWindows.subscribe((v) => {
     openWin = v;
@@ -44,11 +48,12 @@ import Warning from "../desktop/Window/Warning.svelte";
         >
       </tr>
     {/each}
-  </table><br>
+  </table>
+  <br />
   <h3 class="header">Controls</h3>
 
   <a href="./#">Link</a>
-  <input placeholder="Input"/>
+  <input placeholder="Input" />
   <select>
     <option>Selectbox</option>
   </select>
@@ -59,21 +64,27 @@ import Warning from "../desktop/Window/Warning.svelte";
   <button class="material-icons">check</button>
   <button>Normal</button>
   <button class="maxwidth">Max Width</button>
-  <button class="maxwidth" disabled>Max Width Disabled</button>  
+  <button class="maxwidth" disabled>Max Width Disabled</button>
   <button class="transparent" disabled>Transparent Disabled</button>
   <button disabled class="material-icons">close</button>
   <button disabled>Normal Disabled</button>
-  <Warning type={0} caption="This is just a test"/>
-  <Warning type={1} caption="This application is internal for development only."/>
-  <Warning type={2} caption="A fatal error has occured and the application might not remain stable."/>
+  <Warning type={0} caption="This is just a test" />
+  <Warning
+    type={1}
+    caption="This application is internal for development only."
+  />
+  <Warning
+    type={2}
+    caption="A fatal error has occured and the application might not remain stable."
+  />
 </div>
 
 <style scoped>
   div {
-    width:100%
+    width: 100%;
   }
   table {
-    width:100%;
+    width: 100%;
   }
   table tr.toprow * {
     font-weight: bolder;
@@ -81,7 +92,7 @@ import Warning from "../desktop/Window/Warning.svelte";
   }
 
   tr.toprow .name {
-    min-width:150px;
+    min-width: 150px;
   }
 
   tr.toprow .id {
@@ -90,13 +101,13 @@ import Warning from "../desktop/Window/Warning.svelte";
   }
 
   tr.toprow .builtin {
-    min-width:60px;
-    width:80px;
+    min-width: 60px;
+    width: 80px;
   }
 
   tr.toprow .close {
     min-width: 50px;
     max-width: 50px;
-    width:50px
+    width: 50px;
   }
 </style>

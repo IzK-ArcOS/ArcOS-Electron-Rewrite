@@ -12,13 +12,13 @@
   export let userData: UserTemplate;
 
   let theme: ThemeData;
-  let color:string;
+  let color: string;
 
   function update(v: UserTemplate | boolean) {
     userData = v as UserTemplate;
 
     theme = Themes.get(userData.theme)!;
-    color = theme.variables.fontColor
+    color = theme.variables.fontColor;
   }
 
   userDataStore.subscribe(update);

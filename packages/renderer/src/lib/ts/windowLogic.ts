@@ -59,7 +59,7 @@ export function generateWindowStyle(
       ? `max-width: ${app.maxSize?.w}px; max-height: ${app.maxSize?.h}px`
       : "";
 
-      const minSizeCSS = app.minSize
+    const minSizeCSS = app.minSize
       ? `min-width: ${app.minSize?.w}px; min-height: ${app.minSize?.h}px`
       : "";
 
@@ -67,8 +67,15 @@ export function generateWindowStyle(
       ? `width: ${app.size?.w}px; height: ${app.size?.h}px`
       : "";
 
-    console.log(backgr,color,border,startPosCSS,maxSizeCSS,sizeCSS,minSizeCSS)
-
+    console.log(
+      backgr,
+      color,
+      border,
+      startPosCSS,
+      maxSizeCSS,
+      sizeCSS,
+      minSizeCSS
+    );
 
     str = `border: ${border}; ${colorCSS} resize: ${
       app.resizable ? "both" : "none"

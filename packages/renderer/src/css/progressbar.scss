@@ -160,7 +160,6 @@ progress::-webkit-progress-value:indeterminate {
   background-color: gray;
 }
 
-/* All good till now. Now we'll style the background */
 progress::-webkit-progress-bar {
   background: var(--buttonBackgroundColor);
   border-radius: 50px;

@@ -8,7 +8,7 @@
   import { powerState } from "./ts/stores";
   import { PowerState } from "./ts/powerLogic";
   import BlankOut from "./BlankOut.svelte";
-  
+
   const Buffer = buf.Buffer;
 
   createUser("TechWorldInc");

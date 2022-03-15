@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Inter&display=swap");
 
 * {
-  outline:none !important;
+  outline: none !important;
   user-select: none;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
 }
 
-.sharp, .sharp * {
-  border-radius: 0 !important
+.sharp,
+.sharp * {
+  border-radius: 0 !important;
 }

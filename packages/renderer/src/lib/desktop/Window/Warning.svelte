@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { userDataStore } from "../../ts/stores";
+  import { Themes } from "../../ts/themeLogic";
+  import type { UserTemplate } from "../../ts/userLogic";
+
   export let type: WarningType;
   export let caption: string;
 
@@ -11,9 +15,17 @@
   let isWrn = type == WarningType.warning;
   let isErr = type == WarningType.error;
   let isInf = type == WarningType.info;
+  let cssString: string;
+  userDataStore.subscribe((uD) => {
+    const theme = Themes.get((uD as UserTemplate).theme);
+
+    if (theme) {
+      cssString = `background-color: ${theme.variables.windowBackground};`;
+    }
+  });
 </script>
 
-<div>
+<div style={cssString}>
   <span
     class="material-icons"
     class:info={isInf}

@@ -56,7 +56,9 @@
   userDataStore.subscribe(update);
   startMenuOpened.subscribe((value) => (startMenuOpen = value));
   actCenterOpened.subscribe((value) => (actCenterOpen = value));
-  openedWindows.subscribe((v) => {appList = v})
+  openedWindows.subscribe((v) => {
+    appList = v;
+  });
 
   const toggleStart = () => startMenuOpened.set(!startMenuOpen);
   const toggleActCenter = () => actCenterOpened.set(!actCenterOpen);

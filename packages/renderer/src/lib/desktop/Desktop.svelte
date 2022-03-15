@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-
   import "../../css/general.scss";
   import BlankOut from "../BlankOut.svelte";
   import { PowerState } from "../ts/powerLogic";
@@ -19,10 +18,10 @@
   }, 3000);
 
   onMount(() => {
-    setUserPreference(username, "theme", Theme.lightround);
-  });
+    setUserPreference(username, "theme", Theme.darkround);
 
-  openedWindows.set([]);
+    openedWindows.set([]);
+  });
 </script>
 
 <div class="desktop">

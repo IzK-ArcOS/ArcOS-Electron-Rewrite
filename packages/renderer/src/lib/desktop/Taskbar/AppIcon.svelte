@@ -6,27 +6,26 @@
   import type { WindowData } from "../../ts/appLogic";
   import type { ThemeData } from "../../ts/themeLogic";
   import type { UserTemplate } from "../../ts/userLogic";
-import { minimizeWindow, openWindow } from "../../ts/windowLogic";
+  import { minimizeWindow, openWindow } from "../../ts/windowLogic";
 
-  export let app: WindowData|false;
+  export let app: WindowData | false;
   export let userData: UserTemplate;
 
   const cApp = app as WindowData;
 
   let theme: ThemeData;
 
-  function update(v: UserTemplate|boolean) {
+  function update(v: UserTemplate | boolean) {
     userData = v as UserTemplate;
 
     theme = Themes.get(userData.theme)!;
-
   }
 
   update(userData);
 
   userDataStore.subscribe(update);
 
-  userData = get(userDataStore) as UserTemplate
+  userData = get(userDataStore) as UserTemplate;
 
   theme = Themes.get(userData.theme)!;
 
@@ -46,7 +45,7 @@ import { minimizeWindow, openWindow } from "../../ts/windowLogic";
   button {
     background-color: transparent;
     border: none;
-    height:40px;
+    height: 40px;
     padding: 0 10px;
   }
 
@@ -55,12 +54,12 @@ import { minimizeWindow, openWindow } from "../../ts/windowLogic";
     vertical-align: middle;
     color: inherit;
   }
-  
+
   button:hover {
     background-color: #0003;
   }
 
   span.hidden {
-    display:none;
+    display: none;
   }
 </style>

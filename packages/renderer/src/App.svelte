@@ -3,7 +3,7 @@
 </script>
 
 <div>
-  <Boot status="" duration={5000} />
+  <Boot status="" duration={2000} />
 </div>
 
 <style scoped>

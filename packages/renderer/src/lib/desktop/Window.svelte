@@ -4,7 +4,7 @@
   import { getUserData } from "../ts/userLogic";
   import type { UserTemplate } from "../ts/userLogic";
   import defIcon from "../../img/systemIcon.svg";
-  import type { WindowData } from "../ts/appLogic";
+  import type { WindowData, WindowMenuBar } from "../ts/appLogic";
   import "../../css/general.scss";
   import { onMount } from "svelte";
   import {
@@ -27,6 +27,8 @@
   let maxd: boolean;
   let clsd: boolean;
   let ndkd: boolean;
+  let mbar: boolean;
+  let mDat: WindowMenuBar;
   let elmnt: HTMLElement;
 
   function update(uData: UserTemplate | boolean) {
@@ -39,6 +41,9 @@
       : true;
 
     ndkd = !userData.taskbar.docked!;
+    mbar = !!app.menubar;
+
+    if (mbar) mDat = app.menubar as WindowMenuBar;
 
     if (!get(Windows).includes(app)) {
       const newWindowList = get(Windows);
@@ -54,6 +59,7 @@
           mind = list[i].state.min;
           maxd = list[i].state.max;
           clsd = list[i].state.cls;
+          app = list[i];
         }
       }
     });
@@ -100,31 +106,43 @@
   on:mousedown={clk}
   bind:this={elmnt}
 >
-  {#if !app.headless}
-    <div class="titlebar" on:dblclick={max}>
-      <img class="icon" alt="Program Icon" src={defIcon} />
-      <p class="title">{app.name}</p>
-      <div class="controls">
-        <button
-          class="min material-icons"
-          disabled={!app.controls.min}
-          on:click={min}>minimize</button
-        >
-        <button
-          class="max material-icons"
-          disabled={!app.controls.max}
-          on:click={max}>crop_square</button
-        >
-        <button
-          class="cls material-icons"
-          disabled={!app.controls.cls}
-          on:click={cls}>close</button
-        >
-      </div>
+  <div class="titlebar" on:dblclick={max} class:hidden={app.headless}>
+    <img class="icon" alt="Program Icon" src={defIcon} />
+    <p class="title">{app.name}</p>
+    <div class="controls">
+      <button
+        class="min material-icons"
+        disabled={!app.controls.min}
+        on:click={min}>minimize</button
+      >
+      <button
+        class="max material-icons"
+        disabled={!app.controls.max}
+        on:click={max}>crop_square</button
+      >
+      <button
+        class="cls material-icons"
+        disabled={!app.controls.cls}
+        on:click={cls}>close</button
+      >
     </div>
-  {/if}
-  <div class="body">
-    <svelte:component this={app.content} />
+  </div>
+  <div class="menubar" class:hidden={!mbar}>
+    {#if mbar}
+      {#each mDat.leftItems as item}
+        <button on:click={item.click}>{item.caption}</button>
+        <span class="sep" class:hidden={!item.sep} />
+      {/each}
+      <span class="right">
+        {#each mDat.rightItems || [] as item}
+          <button on:click={item.click}>{item.caption}</button>
+          <span class="sep" class:hidden={!item.sep} />
+        {/each}
+      </span>
+    {/if}
+  </div>
+  <div class="body" class:mbar>
+    <svelte:component this={app.content} {app} />
   </div>
 </div>
 
@@ -184,13 +202,15 @@
   }
 
   div.window div.titlebar {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 30px;
-    padding: 5px;
+    background-color: transparent;
+    color: inherit;
+    height: 40px;
+    padding: 7px 10px;
     box-sizing: border-box;
+  }
+
+  div.window div.titlebar.hidden {
+    display: none;
   }
 
   div.window div.titlebar * {
@@ -200,20 +220,25 @@
 
   div.window div.titlebar div.controls {
     position: absolute;
-    right: 5px;
+    right: 10px;
     top: 5px;
   }
 
   div.window div.titlebar div.controls button {
-    background-color: transparent;
+    border-radius: 5px;
+    border: none;
     width: 20px;
     height: 20px;
-    border: none;
-    font-size: 15px;
+    word-wrap: break-word;
+    background-color: transparent;
     color: inherit;
-    padding: 0;
-    transition: opacity 0.3s, background-color 0.3s;
-    border-radius: 2.5px;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-bottom: 2px;
+    min-width: unset;
+    padding-top: 3px;
+    padding-left: 3px;
+    font-size: inherit;
   }
 
   div.window div.titlebar div.controls button:hover {
@@ -241,11 +266,43 @@
 
   div.window div.body {
     position: absolute;
-    top: 30px;
+    top: 40px;
     box-sizing: border-box;
     padding: 10px;
     overflow: auto;
-    max-height: calc(100% - 30px);
+    max-height: calc(100% - 40px);
     width: 100%;
+  }
+
+  div.window div.body.mbar {
+    top: 60px;
+    max-height: calc(100% - 60px);
+  }
+
+  div.window div.menubar:not(.hidden) {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    height: 20px;
+  }
+
+  div.window div.menubar button {
+    height: 20px;
+    padding: 2px 10px 0px 10px;
+    padding-top: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 2.5px;
+    color: inherit;
+    box-sizing: border-box;
+    transition: background-color 0.2s;
+  }
+
+  div.window div.menubar button:hover {
+    background-color: #fff3;
+  }
+
+  div.window div.menubar span.right {
+    float: right;
   }
 </style>

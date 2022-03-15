@@ -39,24 +39,24 @@ export function changePwrState(powerState: PowerState) {
   );
 }
 
-export function Log(log:KernelLog) {
+export function Log(log: KernelLog) {
   const kLog = get(kernelLog);
 
   log.timestamp = new Date().getTime();
 
-  kLog.push(log)
+  kLog.push(log);
 }
 
 export interface KernelLog {
-  title:string;
-  content:string;
-  priority:LogPriority;
-  timestamp?:number;
+  title: string;
+  content: string;
+  priority: LogPriority;
+  timestamp?: number;
 }
 
 export enum LogPriority {
   status,
   warning,
   critical,
-  fatal
+  fatal,
 }
